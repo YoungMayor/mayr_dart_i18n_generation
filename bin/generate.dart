@@ -98,7 +98,9 @@ List<String> _findDartFilesWithPartDirective([String? startPath]) {
   for (final entity in libDir.listSync(recursive: true)) {
     if (entity is File && entity.path.endsWith('.dart') && !entity.path.endsWith('.g.dart')) {
       final content = entity.readAsStringSync();
-      if (content.contains(RegExp(r"part\s+['\"].*\.g\.dart['\"]"))) {
+      // Check for part directive with .g.dart
+      if (content.contains('.g.dart') && 
+          (content.contains("part '") || content.contains('part "'))) {
         dartFiles.add(entity.path);
       }
     }

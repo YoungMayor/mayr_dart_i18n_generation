@@ -63,8 +63,8 @@ class CodeEmitter {
     buffer.writeln('    // Users should implement their own translation logic');
     buffer.writeln('    // or use this with the mayr_i18n package');
     buffer.writeln('    throw UnimplementedError(');
-    buffer.writeln("      'Translation method not implemented. ");
-    buffer.writeln("      Please implement this extension or use mayr_i18n package.',");
+    buffer.writeln("      'Translation method not implemented. '");
+    buffer.writeln("      'Please implement this extension or use mayr_i18n package.',");
     buffer.writeln('    );');
     buffer.writeln('  }');
     buffer.writeln('}');

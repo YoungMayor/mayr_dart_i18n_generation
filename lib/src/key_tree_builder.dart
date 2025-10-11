@@ -57,26 +57,23 @@ class KeyTreeBuilder {
   ///
   /// Returns a root node with children representing the structure.
   static KeyNode buildTree(Map<String, dynamic> translations) {
-    final root = KeyNode(
+    final children = <String, KeyNode>{};
+    _buildTreeRecursive(translations, children, '');
+
+    return KeyNode(
       key: 'root',
-      children: {},
+      children: children,
       isLeaf: false,
       fullPath: '',
     );
-
-    _buildTreeRecursive(translations, root, '');
-
-    return root;
   }
 
   /// Recursively builds the tree structure.
   static void _buildTreeRecursive(
     Map<String, dynamic> data,
-    KeyNode parent,
+    Map<String, KeyNode> parentChildren,
     String prefix,
   ) {
-    final children = <String, KeyNode>{};
-
     for (final entry in data.entries) {
       final key = entry.key;
       final value = entry.value;
@@ -84,37 +81,24 @@ class KeyTreeBuilder {
 
       if (value is Map<String, dynamic>) {
         // This is a nested object
-        final node = KeyNode(
+        final childrenMap = <String, KeyNode>{};
+        _buildTreeRecursive(value, childrenMap, fullPath);
+        
+        parentChildren[key] = KeyNode(
           key: key,
-          children: {},
+          children: childrenMap,
           isLeaf: false,
           fullPath: fullPath,
         );
-        children[key] = node;
-        _buildTreeRecursive(value, node, fullPath);
-        
-        // Update the node with its children
-        children[key] = node.copyWith(
-          children: node.children,
-        );
       } else {
         // This is a leaf node (actual translation)
-        children[key] = KeyNode(
+        parentChildren[key] = KeyNode(
           key: key,
           children: {},
           isLeaf: true,
           fullPath: fullPath,
         );
       }
-    }
-
-    // Update parent's children
-    if (parent.children.isEmpty) {
-      parent = parent.copyWith(children: children);
-    } else {
-      final updatedChildren = Map<String, KeyNode>.from(parent.children)
-        ..addAll(children);
-      parent = parent.copyWith(children: updatedChildren);
     }
   }
 
