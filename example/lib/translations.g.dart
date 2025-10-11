@@ -119,4 +119,3 @@ class _ProfileDetailsKeys {
   /// ### Phone Number
   final String phone = 'profile.details.phone';
 }
-
