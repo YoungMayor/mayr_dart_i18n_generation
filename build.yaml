@@ -1,0 +1,16 @@
+targets:
+  $default:
+    builders:
+      mayr_i18n_generation|i18n:
+        generate_for:
+          - lib/**.dart
+        options:
+          enabled: true
+
+builders:
+  i18n:
+    import: "package:mayr_i18n_generation/mayr_i18n_generation.dart"
+    builder_factories: ["i18nBuilder"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: dependents
+    build_to: source
