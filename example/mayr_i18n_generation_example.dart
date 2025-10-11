@@ -26,14 +26,14 @@ void main() {
   print('  - ${I18nKeys.auth.signup}');
   print('  - ${I18nKeys.auth.email}');
   print('  - ${I18nKeys.auth.password}');
-  print('  - ${I18nKeys.auth.forgot_password}');
+  print('  - ${I18nKeys.auth.forgotPassword}');
   print('');
 
   // Error keys
   print('Error keys:');
   print('  - ${I18nKeys.errors.network}');
-  print('  - ${I18nKeys.errors.invalid_email}');
-  print('  - ${I18nKeys.errors.password_too_short}');
+  print('  - ${I18nKeys.errors.invalidEmail}');
+  print('  - ${I18nKeys.errors.passwordTooShort}');
   print('  - ${I18nKeys.errors.unknown}');
   print('');
 

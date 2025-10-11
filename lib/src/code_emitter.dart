@@ -35,6 +35,7 @@ class CodeEmitter {
     // Static fields for top-level keys
     for (final entry in tree.children.entries) {
       final key = entry.key;
+      final camelKey = _toCamelCase(key);
       final node = entry.value;
 
       buffer.writeln();
@@ -43,12 +44,12 @@ class CodeEmitter {
         final doc = _valueDoc(defaultValues, node.fullPath);
 
         buffer.writeln('  $doc');
-        buffer.writeln("  static const String $key = '${node.fullPath}';");
+        buffer.writeln("  static const String $camelKey = '${node.fullPath}';");
       } else {
         final className = _toClassNameFromPath(node.fullPath);
 
         buffer.writeln("  /// Translation keys under '$key.*'");
-        buffer.writeln('  static const $key = $className._();');
+        buffer.writeln('  static const $camelKey = $className._();');
       }
     }
 
@@ -82,6 +83,7 @@ class CodeEmitter {
     // Generate fields for this class
     for (final entry in node.children.entries) {
       final key = entry.key;
+      final camelKey = _toCamelCase(key);
       final childNode = entry.value;
 
       buffer.writeln();
@@ -90,14 +92,14 @@ class CodeEmitter {
         final doc = _valueDoc(defaultValues, childNode.fullPath);
 
         buffer.writeln('  $doc');
-        buffer.writeln("  final String $key = '${childNode.fullPath}';");
+        buffer.writeln("  final String $camelKey = '${childNode.fullPath}';");
       } else {
         final childClassName = _toClassNameFromPath(childNode.fullPath);
 
         buffer.writeln(
           "  /// Translation keys under '${childNode.fullPath}.*'",
         );
-        buffer.writeln('  final $key = const $childClassName._();');
+        buffer.writeln('  final $camelKey = const $childClassName._();');
       }
     }
 
@@ -189,5 +191,15 @@ class CodeEmitter {
     // Avoid starting with triple slashes conflicts or comment closers
     v = v.replaceAll('///', '///');
     return v;
+  }
+
+  static String _toCamelCase(String snakeCase) {
+    return snakeCase.split('_').map((word) {
+      // Capitalize the first letter of each word except the first one
+      if (word == snakeCase.split('_').first) {
+        return word;
+      }
+      return word[0].toUpperCase() + word.substring(1);
+    }).join();
   }
 }

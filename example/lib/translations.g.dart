@@ -24,19 +24,19 @@ class I18nKeys {
 class _AppKeys {
   const _AppKeys._();
 
-  /// __app.title__
+  /// _app.title_
   /// ### Example App
   final String title = 'app.title';
 
-  /// __app.welcome__
+  /// _app.welcome_
   /// ### Welcome {name}!
   final String welcome = 'app.welcome';
 
-  /// __app.logout__
+  /// _app.logout_
   /// ### Goodbye
   final String logout = 'app.logout';
 
-  /// __app.settings__
+  /// _app.settings_
   /// ### Settings
   final String settings = 'app.settings';
 }
@@ -45,44 +45,44 @@ class _AppKeys {
 class _AuthKeys {
   const _AuthKeys._();
 
-  /// __auth.login__
+  /// _auth.login_
   /// ### Login
   final String login = 'auth.login';
 
-  /// __auth.signup__
+  /// _auth.signup_
   /// ### Sign Up
   final String signup = 'auth.signup';
 
-  /// __auth.email__
+  /// _auth.email_
   /// ### Email
   final String email = 'auth.email';
 
-  /// __auth.password__
+  /// _auth.password_
   /// ### Password
   final String password = 'auth.password';
 
-  /// __auth.forgot_password__
+  /// _auth.forgot_password_
   /// ### Forgot Password?
-  final String forgot_password = 'auth.forgot_password';
+  final String forgotPassword = 'auth.forgot_password';
 }
 
 /// Translation keys under 'errors.*'
 class _ErrorsKeys {
   const _ErrorsKeys._();
 
-  /// __errors.network__
+  /// _errors.network_
   /// ### No internet connection
   final String network = 'errors.network';
 
-  /// __errors.invalid_email__
+  /// _errors.invalid_email_
   /// ### Invalid email address
-  final String invalid_email = 'errors.invalid_email';
+  final String invalidEmail = 'errors.invalid_email';
 
-  /// __errors.password_too_short__
+  /// _errors.password_too_short_
   /// ### Password must be at least 8 characters
-  final String password_too_short = 'errors.password_too_short';
+  final String passwordTooShort = 'errors.password_too_short';
 
-  /// __errors.unknown__
+  /// _errors.unknown_
   /// ### An unknown error occurred
   final String unknown = 'errors.unknown';
 }
@@ -91,14 +91,14 @@ class _ErrorsKeys {
 class _ProfileKeys {
   const _ProfileKeys._();
 
-  /// __profile.name__
+  /// _profile.name_
   /// ### Name
   final String name = 'profile.name';
 
   /// Translation keys under 'profile.details.*'
   final details = const _ProfileDetailsKeys._();
 
-  /// __profile.bio__
+  /// _profile.bio_
   /// ### Biography
   final String bio = 'profile.bio';
 }
@@ -107,15 +107,15 @@ class _ProfileKeys {
 class _ProfileDetailsKeys {
   const _ProfileDetailsKeys._();
 
-  /// __profile.details.age__
+  /// _profile.details.age_
   /// ### Age
   final String age = 'profile.details.age';
 
-  /// __profile.details.email__
+  /// _profile.details.email_
   /// ### Email
   final String email = 'profile.details.email';
 
-  /// __profile.details.phone__
+  /// _profile.details.phone_
   /// ### Phone Number
   final String phone = 'profile.details.phone';
 }
