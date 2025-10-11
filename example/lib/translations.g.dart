@@ -18,7 +18,6 @@ class I18nKeys {
 
   /// Translation keys under 'profile.*'
   static const profile = _ProfileKeys._();
-
 }
 
 /// Translation keys under 'app.*'
@@ -44,7 +43,6 @@ class _AppKeys {
   ///
   /// ### Settings
   final String settings = 'app.settings';
-
 }
 
 /// Translation keys under 'auth.*'
@@ -75,7 +73,6 @@ class _AuthKeys {
   ///
   /// ### Forgot Password?
   final String forgot_password = 'auth.forgot_password';
-
 }
 
 /// Translation keys under 'errors.*'
@@ -101,7 +98,6 @@ class _ErrorsKeys {
   ///
   /// ### An unknown error occurred
   final String unknown = 'errors.unknown';
-
 }
 
 /// Translation keys under 'profile.*'
@@ -120,7 +116,6 @@ class _ProfileKeys {
   ///
   /// ### Biography
   final String bio = 'profile.bio';
-
 }
 
 /// Translation keys under 'profile.details.*'
@@ -141,6 +136,5 @@ class _ProfileDetailsKeys {
   ///
   /// ### Phone Number
   final String phone = 'profile.details.phone';
-
 }
 

@@ -31,12 +31,13 @@ class CodeEmitter {
     buffer.writeln('/// Generated translation keys for type-safe access.');
     buffer.writeln('class I18nKeys {');
     buffer.writeln('  const I18nKeys._();');
-    buffer.writeln();
 
     // Static fields for top-level keys
     for (final entry in tree.children.entries) {
       final key = entry.key;
       final node = entry.value;
+
+      buffer.writeln();
 
       if (node.isLeaf) {
         final doc = _valueDoc(defaultValues, node.fullPath);
@@ -49,8 +50,6 @@ class CodeEmitter {
         buffer.writeln("  /// Translation keys under '$key.*'");
         buffer.writeln('  static const $key = $className._();');
       }
-
-      buffer.writeln();
     }
 
     buffer.writeln('}');
@@ -79,12 +78,13 @@ class CodeEmitter {
     buffer.writeln('/// Translation keys under \'${node.fullPath}.*\'');
     buffer.writeln('class $className {');
     buffer.writeln('  const $className._();');
-    buffer.writeln();
 
     // Generate fields for this class
     for (final entry in node.children.entries) {
       final key = entry.key;
       final childNode = entry.value;
+
+      buffer.writeln();
 
       if (childNode.isLeaf) {
         final doc = _valueDoc(defaultValues, childNode.fullPath);
@@ -99,8 +99,6 @@ class CodeEmitter {
         );
         buffer.writeln('  final $key = const $childClassName._();');
       }
-
-      buffer.writeln();
     }
 
     buffer.writeln('}');
