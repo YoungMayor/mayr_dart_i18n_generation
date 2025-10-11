@@ -19,3 +19,7 @@ dev_dependencies:
 mayr_i18n:
   lang_directory: assets/lang
   default_locale: en
+
+# Configure the code generator
+mayr_i18n_generation:
+  output_file: lib/translations.dart  # Default is lib/generated/translations.dart

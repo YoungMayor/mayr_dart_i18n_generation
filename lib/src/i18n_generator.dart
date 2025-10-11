@@ -14,6 +14,20 @@ import 'code_emitter.dart';
 class I18nGenerator extends Generator {
   @override
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
+    // Read generator configuration to check if we should process this file
+    final generatorConfig = GeneratorConfig.findAndRead();
+    
+    // Check if this file matches the configured output_file
+    final inputPath = buildStep.inputId.path;
+    final normalizedOutputFile = generatorConfig.outputFile.replaceAll('\\', '/');
+    
+    if (!inputPath.endsWith(normalizedOutputFile)) {
+      log.fine(
+        'Skipping ${buildStep.inputId} - not the configured output_file ($normalizedOutputFile)',
+      );
+      return null;
+    }
+    
     // Check if this library has a part directive for .g.dart
     if (!_hasPartDirective(library)) {
       log.info('Skipping ${buildStep.inputId} - no .g.dart part directive');
@@ -23,11 +37,12 @@ class I18nGenerator extends Generator {
     log.info('Generating i18n code for ${buildStep.inputId}');
 
     try {
-      // Read configuration from the package being built
+      // Read i18n configuration
       final config = I18nConfig.findAndRead();
       log.info(
         'Config loaded: lang_directory=${config.langDirectory}, default_locale=${config.defaultLocale}',
       );
+      log.info('Generator config: output_file=${generatorConfig.outputFile}');
 
       // Get the language directory path
       final langDir = config.getAbsoluteLangDirectory();

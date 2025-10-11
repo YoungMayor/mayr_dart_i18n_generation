@@ -17,6 +17,8 @@
 1. **Configuration Reader** (`src/config.dart`)
    - Reads `mayr_i18n` configuration from `pubspec.yaml`
    - Default values: `lang_directory: assets/lang`, `default_locale: en`
+   - Reads `mayr_i18n_generation` configuration for generator settings
+   - Default `output_file: lib/generated/translations.dart` (prevents conflicts with other generators)
 
 2. **JSON Parser** (`src/json_parser.dart`)
    - Parses JSON language files from the configured directory
