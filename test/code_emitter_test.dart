@@ -46,7 +46,7 @@ void main() {
       final code = CodeEmitter.emitCode(tree, 'translations.dart');
 
       expect(code, contains('class _ProfileKeys'));
-      expect(code, contains('class _DetailsKeys'));
+      expect(code, contains('class _ProfileDetailsKeys'));
       expect(code, contains("final String age = 'profile.details.age';"));
       expect(code, contains("final String email = 'profile.details.email';"));
     });

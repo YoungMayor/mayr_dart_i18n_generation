@@ -14,6 +14,7 @@ A complete Dart code generation package for type-safe i18n translation keys.
 - 🌐 **Multi-locale support** - Manage multiple language files easily
 - 🎯 **Targeted generation** - Configure which file to process via `output_file` to avoid conflicts with other generators
 - 🚀 **Automatic file creation** - CLI command creates the output file with proper structure if it doesn't exist
+- 🔒 **Unique class names** - Uses full path for nested class names to prevent conflicts (e.g., `_ProfileDetailsKeys`, `_UserDetailsKeys`)
 - 📝 **Comprehensive documentation** - Full API docs and examples
 - ✅ **Well-tested** - Extensive test coverage for all components
 

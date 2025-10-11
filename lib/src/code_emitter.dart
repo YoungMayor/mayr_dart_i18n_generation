@@ -35,7 +35,7 @@ class CodeEmitter {
         buffer.writeln("  /// Translation key: '${node.fullPath}'");
         buffer.writeln("  static const String $key = '${node.fullPath}';");
       } else {
-        final className = _toClassName(key);
+        final className = _toClassNameFromPath(node.fullPath);
         buffer.writeln("  /// Translation keys under '$key.*'");
         buffer.writeln('  static const $key = $className._();');
       }
@@ -58,7 +58,7 @@ class CodeEmitter {
 
   /// Emits a class for a nested key group.
   static void _emitClass(StringBuffer buffer, KeyNode node) {
-    final className = _toClassName(node.key);
+    final className = _toClassNameFromPath(node.fullPath);
 
     buffer.writeln('/// Translation keys under \'${node.fullPath}.*\'');
     buffer.writeln('class $className {');
@@ -74,7 +74,7 @@ class CodeEmitter {
         buffer.writeln("  /// Translation key: '${childNode.fullPath}'");
         buffer.writeln("  final String $key = '${childNode.fullPath}';");
       } else {
-        final childClassName = _toClassName(key);
+        final childClassName = _toClassNameFromPath(childNode.fullPath);
         buffer.writeln(
           "  /// Translation keys under '${childNode.fullPath}.*'",
         );
@@ -93,13 +93,22 @@ class CodeEmitter {
     }
   }
 
-  /// Converts a key to a valid class name.
+  /// Converts a full path to a valid class name.
   ///
-  /// Example: 'app' -> '_AppKeys', 'error_messages' -> '_ErrorMessagesKeys'
-  static String _toClassName(String key) {
+  /// Uses the full path to ensure uniqueness and avoid naming conflicts.
+  /// Example: 'profile.details' -> '_ProfileDetailsKeys'
+  ///          'user.details' -> '_UserDetailsKeys'
+  static String _toClassNameFromPath(String path) {
+    // Split by dots and underscores to get all parts
+    final pathParts = path.split('.');
+    final allParts = <String>[];
+    
+    for (final part in pathParts) {
+      allParts.addAll(part.split('_'));
+    }
+    
     // Convert to PascalCase
-    final parts = key.split('_');
-    final pascalCase = parts
+    final pascalCase = allParts
         .map(
           (part) =>
               part.isEmpty ? '' : part[0].toUpperCase() + part.substring(1),

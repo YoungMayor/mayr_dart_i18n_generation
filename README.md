@@ -199,6 +199,27 @@ Accessed as:
 I18nKeys.profile.details.email.tr();
 ```
 
+### Class Naming
+
+To avoid naming conflicts, nested classes are named using their full path:
+
+```dart
+// profile.details → _ProfileDetailsKeys
+class _ProfileDetailsKeys {
+  const _ProfileDetailsKeys._();
+  final String age = 'profile.details.age';
+  final String email = 'profile.details.email';
+}
+
+// user.details → _UserDetailsKeys (different class!)
+class _UserDetailsKeys {
+  const _UserDetailsKeys._();
+  final String name = 'user.details.name';
+}
+```
+
+This ensures that even if multiple keys have the same nested structure (e.g., `profile.details` and `user.details`), they generate unique class names and won't conflict.
+
 ---
 
 ## 🧱 Output Example
