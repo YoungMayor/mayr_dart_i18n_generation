@@ -48,9 +48,10 @@ void main() {
 
   print('✅ All keys are type-safe and provide autocomplete!');
   print('');
-  print('💡 In a real app, you would use these keys with the mayr_i18n package:');
+  print(
+    '💡 In a real app, you would use these keys with the mayr_i18n package:',
+  );
   print('   I18nKeys.app.welcome.tr(args: {"name": "Mayor"})');
   print('   // => "Welcome Mayor!" (in English)');
   print('   // => "Bienvenue Mayor!" (in French)');
 }
-
