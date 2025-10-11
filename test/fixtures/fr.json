@@ -1,0 +1,9 @@
+{
+  "app": {
+    "welcome": "Bienvenue",
+    "logout": "Au revoir"
+  },
+  "errors": {
+    "network": "Pas de connexion"
+  }
+}
