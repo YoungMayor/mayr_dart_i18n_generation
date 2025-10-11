@@ -8,7 +8,14 @@ class CodeEmitter {
   /// Generates a complete Dart file from a key tree.
   ///
   /// [partOf] specifies the file this is a part of (e.g., 'translations.dart').
-  static String emitCode(KeyNode tree, String partOf) {
+  /// [defaultValues] is an optional map of full dot-path -> value for the
+  /// default locale. When provided, leaf fields will include the default
+  /// locale value in their doc comments instead of the raw key path.
+  static String emitCode(
+    KeyNode tree,
+    String partOf, {
+    Map<String, String>? defaultValues,
+  }) {
     final buffer = StringBuffer();
 
     // Header
@@ -32,13 +39,18 @@ class CodeEmitter {
       final node = entry.value;
 
       if (node.isLeaf) {
-        buffer.writeln("  /// Translation key: '${node.fullPath}'");
+        final doc = _valueDoc(defaultValues, node.fullPath);
+
+        buffer.writeln('  $doc');
         buffer.writeln("  static const String $key = '${node.fullPath}';");
       } else {
         final className = _toClassNameFromPath(node.fullPath);
+
         buffer.writeln("  /// Translation keys under '$key.*'");
         buffer.writeln('  static const $key = $className._();');
       }
+
+      buffer.writeln();
     }
 
     buffer.writeln('}');
@@ -48,7 +60,7 @@ class CodeEmitter {
     for (final entry in tree.children.entries) {
       final node = entry.value;
       if (!node.isLeaf) {
-        _emitClass(buffer, node);
+        _emitClass(buffer, node, defaultValues);
         buffer.writeln();
       }
     }
@@ -57,7 +69,11 @@ class CodeEmitter {
   }
 
   /// Emits a class for a nested key group.
-  static void _emitClass(StringBuffer buffer, KeyNode node) {
+  static void _emitClass(
+    StringBuffer buffer,
+    KeyNode node, [
+    Map<String, String>? defaultValues,
+  ]) {
     final className = _toClassNameFromPath(node.fullPath);
 
     buffer.writeln('/// Translation keys under \'${node.fullPath}.*\'');
@@ -71,15 +87,20 @@ class CodeEmitter {
       final childNode = entry.value;
 
       if (childNode.isLeaf) {
-        buffer.writeln("  /// Translation key: '${childNode.fullPath}'");
+        final doc = _valueDoc(defaultValues, childNode.fullPath);
+
+        buffer.writeln('  $doc');
         buffer.writeln("  final String $key = '${childNode.fullPath}';");
       } else {
         final childClassName = _toClassNameFromPath(childNode.fullPath);
+
         buffer.writeln(
           "  /// Translation keys under '${childNode.fullPath}.*'",
         );
         buffer.writeln('  final $key = const $childClassName._();');
       }
+
+      buffer.writeln();
     }
 
     buffer.writeln('}');
@@ -88,7 +109,7 @@ class CodeEmitter {
     for (final childNode in node.children.values) {
       if (!childNode.isLeaf) {
         buffer.writeln();
-        _emitClass(buffer, childNode);
+        _emitClass(buffer, childNode, defaultValues);
       }
     }
   }
@@ -102,11 +123,11 @@ class CodeEmitter {
     // Split by dots and underscores to get all parts
     final pathParts = path.split('.');
     final allParts = <String>[];
-    
+
     for (final part in pathParts) {
       allParts.addAll(part.split('_'));
     }
-    
+
     // Convert to PascalCase
     final pascalCase = allParts
         .map(
@@ -149,5 +170,26 @@ class CodeEmitter {
     }
 
     return sanitized;
+  }
+
+  /// Builds a doc comment line for a given fullPath using [defaultValues].
+  /// Falls back to the original key path if no value is available.
+  static String _valueDoc(Map<String, String>? defaultValues, String fullPath) {
+    final val = defaultValues?[fullPath];
+
+    if (val != null) {
+      return "/// _${fullPath}_\n  ///\n  /// ### ${_escapeDoc(val)}";
+    }
+
+    return "/// Translation key: '$fullPath'";
+  }
+
+  /// Escapes triple slashes and ensures safe single-line doc comments.
+  static String _escapeDoc(String value) {
+    // Replace CR/LF with spaces to keep single-line docs
+    var v = value.replaceAll(RegExp(r'[\r\n]+'), ' ').trim();
+    // Avoid starting with triple slashes conflicts or comment closers
+    v = v.replaceAll('///', '///');
+    return v;
   }
 }

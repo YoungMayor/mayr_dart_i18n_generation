@@ -9,79 +9,138 @@ class I18nKeys {
 
   /// Translation keys under 'app.*'
   static const app = _AppKeys._();
+
   /// Translation keys under 'auth.*'
   static const auth = _AuthKeys._();
+
   /// Translation keys under 'errors.*'
   static const errors = _ErrorsKeys._();
+
   /// Translation keys under 'profile.*'
   static const profile = _ProfileKeys._();
+
 }
 
 /// Translation keys under 'app.*'
 class _AppKeys {
   const _AppKeys._();
 
-  /// Translation key: 'app.title'
+  /// _app.title_
+  ///
+  /// ### Example App
   final String title = 'app.title';
-  /// Translation key: 'app.welcome'
+
+  /// _app.welcome_
+  ///
+  /// ### Welcome {name}!
   final String welcome = 'app.welcome';
-  /// Translation key: 'app.logout'
+
+  /// _app.logout_
+  ///
+  /// ### Goodbye
   final String logout = 'app.logout';
-  /// Translation key: 'app.settings'
+
+  /// _app.settings_
+  ///
+  /// ### Settings
   final String settings = 'app.settings';
+
 }
 
 /// Translation keys under 'auth.*'
 class _AuthKeys {
   const _AuthKeys._();
 
-  /// Translation key: 'auth.login'
+  /// _auth.login_
+  ///
+  /// ### Login
   final String login = 'auth.login';
-  /// Translation key: 'auth.signup'
+
+  /// _auth.signup_
+  ///
+  /// ### Sign Up
   final String signup = 'auth.signup';
-  /// Translation key: 'auth.email'
+
+  /// _auth.email_
+  ///
+  /// ### Email
   final String email = 'auth.email';
-  /// Translation key: 'auth.password'
+
+  /// _auth.password_
+  ///
+  /// ### Password
   final String password = 'auth.password';
-  /// Translation key: 'auth.forgot_password'
+
+  /// _auth.forgot_password_
+  ///
+  /// ### Forgot Password?
   final String forgot_password = 'auth.forgot_password';
+
 }
 
 /// Translation keys under 'errors.*'
 class _ErrorsKeys {
   const _ErrorsKeys._();
 
-  /// Translation key: 'errors.network'
+  /// _errors.network_
+  ///
+  /// ### No internet connection
   final String network = 'errors.network';
-  /// Translation key: 'errors.invalid_email'
+
+  /// _errors.invalid_email_
+  ///
+  /// ### Invalid email address
   final String invalid_email = 'errors.invalid_email';
-  /// Translation key: 'errors.password_too_short'
+
+  /// _errors.password_too_short_
+  ///
+  /// ### Password must be at least 8 characters
   final String password_too_short = 'errors.password_too_short';
-  /// Translation key: 'errors.unknown'
+
+  /// _errors.unknown_
+  ///
+  /// ### An unknown error occurred
   final String unknown = 'errors.unknown';
+
 }
 
 /// Translation keys under 'profile.*'
 class _ProfileKeys {
   const _ProfileKeys._();
 
-  /// Translation key: 'profile.name'
+  /// _profile.name_
+  ///
+  /// ### Name
   final String name = 'profile.name';
+
   /// Translation keys under 'profile.details.*'
   final details = const _ProfileDetailsKeys._();
-  /// Translation key: 'profile.bio'
+
+  /// _profile.bio_
+  ///
+  /// ### Biography
   final String bio = 'profile.bio';
+
 }
 
 /// Translation keys under 'profile.details.*'
 class _ProfileDetailsKeys {
   const _ProfileDetailsKeys._();
 
-  /// Translation key: 'profile.details.age'
+  /// _profile.details.age_
+  ///
+  /// ### Age
   final String age = 'profile.details.age';
-  /// Translation key: 'profile.details.email'
+
+  /// _profile.details.email_
+  ///
+  /// ### Email
   final String email = 'profile.details.email';
-  /// Translation key: 'profile.details.phone'
+
+  /// _profile.details.phone_
+  ///
+  /// ### Phone Number
   final String phone = 'profile.details.phone';
+
 }
 

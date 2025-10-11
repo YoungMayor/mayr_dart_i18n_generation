@@ -17,7 +17,7 @@ void main(List<String> args) async {
     // Read configurations
     final config = I18nConfig.findAndRead();
     final generatorConfig = GeneratorConfig.findAndRead();
-    
+
     print('📁 Language directory: ${config.langDirectory}');
     print('🌐 Default locale: ${config.defaultLocale}');
     print('📄 Output file: ${generatorConfig.outputFile}\n');
@@ -67,7 +67,7 @@ void main(List<String> args) async {
     if (!outputFile.existsSync()) {
       // Create parent directories if needed
       outputFile.parent.createSync(recursive: true);
-      
+
       // Create the file with a basic structure
       final fileName = p.basename(outputFilePath);
       outputFile.writeAsStringSync('''
@@ -83,18 +83,27 @@ part '${fileName.replaceAll('.dart', '.g.dart')}';
       print('   ℹ️  File already exists: $outputFilePath');
     }
 
+    // Build default locale values map for doc comments
+    final defaultLocale = config.defaultLocale;
+    final defaultTranslations = translations.firstWhere(
+      (t) => t.locale == defaultLocale,
+      orElse: () => translations.first,
+    );
+    final defaultValues = _flattenValues(defaultTranslations.translations);
+
     // Generate the .g.dart file
     print('\n✨ Generating translation keys...');
     final fileName = p.basename(outputFilePath);
-    final code = CodeEmitter.emitCode(mergedTree, fileName);
+    final code = CodeEmitter.emitCode(
+      mergedTree,
+      fileName,
+      defaultValues: defaultValues,
+    );
 
     generatedFile.writeAsStringSync(code);
     print('   ✅ Generated: $generatedFilePath');
 
     print('\n✅ Code generation complete!');
-    print(
-      '\n💡 Tip: You can also use `dart run build_runner build` for automatic generation.',
-    );
   } catch (e, stackTrace) {
     print('\n❌ Error: $e');
     if (args.contains('--verbose') || args.contains('-v')) {
@@ -103,4 +112,21 @@ part '${fileName.replaceAll('.dart', '.g.dart')}';
     }
     exit(1);
   }
+}
+
+/// Flattens nested map values into a fullPath->value map of strings.
+Map<String, String> _flattenValues(
+  Map<String, dynamic> map, [
+  String prefix = '',
+]) {
+  final out = <String, String>{};
+  map.forEach((key, value) {
+    final path = prefix.isEmpty ? key : '$prefix.$key';
+    if (value is Map<String, dynamic>) {
+      out.addAll(_flattenValues(value, path));
+    } else {
+      out[path] = value?.toString() ?? '';
+    }
+  });
+  return out;
 }

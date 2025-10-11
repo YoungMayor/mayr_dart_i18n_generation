@@ -1,4 +1,4 @@
-/// Main generator for i18n code generation using build_runner.
+/// Main generator for i18n code generation.
 library;
 
 import 'dart:async';
@@ -16,18 +16,21 @@ class I18nGenerator extends Generator {
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
     // Read generator configuration to check if we should process this file
     final generatorConfig = GeneratorConfig.findAndRead();
-    
+
     // Check if this file matches the configured output_file
     final inputPath = buildStep.inputId.path;
-    final normalizedOutputFile = generatorConfig.outputFile.replaceAll('\\', '/');
-    
+    final normalizedOutputFile = generatorConfig.outputFile.replaceAll(
+      '\\',
+      '/',
+    );
+
     if (!inputPath.endsWith(normalizedOutputFile)) {
       log.fine(
         'Skipping ${buildStep.inputId} - not the configured output_file ($normalizedOutputFile)',
       );
       return null;
     }
-    
+
     // Check if this library has a part directive for .g.dart
     if (!_hasPartDirective(library)) {
       log.info('Skipping ${buildStep.inputId} - no .g.dart part directive');
@@ -69,8 +72,19 @@ class I18nGenerator extends Generator {
       // Get the part file name from the library
       final partFileName = _getPartFileName(library);
 
+      // Resolve default-locale values for doc comments
+      final defaultTranslations = translations.firstWhere(
+        (t) => t.locale == config.defaultLocale,
+        orElse: () => translations.first,
+      );
+      final defaultValues = _flattenValues(defaultTranslations.translations);
+
       // Generate the code
-      final generatedCode = CodeEmitter.emitCode(mergedTree, partFileName);
+      final generatedCode = CodeEmitter.emitCode(
+        mergedTree,
+        partFileName,
+        defaultValues: defaultValues,
+      );
 
       log.info('Generated ${generatedCode.length} characters of code');
       return generatedCode;
@@ -127,4 +141,21 @@ class I18nGenerator extends Generator {
 /// Builder factory for the i18n generator.
 Builder i18nBuilder(BuilderOptions options) {
   return LibraryBuilder(I18nGenerator(), generatedExtension: '.g.dart');
+}
+
+/// Flattens nested map values into a fullPath->value map of strings.
+Map<String, String> _flattenValues(
+  Map<String, dynamic> map, [
+  String prefix = '',
+]) {
+  final out = <String, String>{};
+  map.forEach((key, value) {
+    final path = prefix.isEmpty ? key : '$prefix.$key';
+    if (value is Map<String, dynamic>) {
+      out.addAll(_flattenValues(value, path));
+    } else {
+      out[path] = value?.toString() ?? '';
+    }
+  });
+  return out;
 }

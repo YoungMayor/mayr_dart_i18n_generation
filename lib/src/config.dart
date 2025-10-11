@@ -133,8 +133,7 @@ class GeneratorConfig {
       final config = yaml['mayr_i18n_generation'];
 
       return GeneratorConfig(
-        outputFile:
-            config['output_file']?.toString() ?? defaults.outputFile,
+        outputFile: config['output_file']?.toString() ?? defaults.outputFile,
       );
     } catch (e) {
       print('Warning: Failed to read mayr_i18n_generation configuration: $e');

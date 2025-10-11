@@ -27,16 +27,7 @@ part 'translations.g.dart';
 
 ## Generate Code
 
-Run one of these commands to generate the translation keys:
-
-### Using build_runner (recommended):
-```bash
-cd example
-dart pub get
-dart run build_runner build
-```
-
-### Using the CLI tool:
+Run this command to generate the translation keys using the CLI tool:
 ```bash
 cd example
 dart pub get
@@ -67,7 +58,7 @@ example/
 │       └── fr.json          # French translations
 ├── lib/
 │   ├── translations.dart    # Declares the part directive
-│   └── translations.g.dart  # Generated code (created by generator)
+│   └── translations.g.dart  # Generated code (created by CLI)
 ├── mayr_i18n_generation_example.dart  # Example usage
 └── pubspec.yaml             # Configuration
 ```

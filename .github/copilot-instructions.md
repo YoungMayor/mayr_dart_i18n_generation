@@ -7,7 +7,7 @@
 ### Key Features:
 - Scans JSON language files and generates Dart classes with type-safe translation keys
 - Provides CLI tools for verifying, syncing, auditing, and creating language files
-- Integrates with `build_runner` for automatic code generation
+- Provides a CLI for manual code generation
 - Supports nested JSON structures for organized translation keys
 
 ## 🏗️ Architecture
@@ -118,7 +118,7 @@ The `example/` directory should contain:
 2. Configure `mayr_i18n` section with `lang_directory` and `default_locale`
 3. Create JSON translation files
 4. Create `lib/translations.dart` with `part 'translations.g.dart';`
-5. Run `dart run build_runner build` or `dart run mayr_i18n_generator:generate`
+5. Run `dart run mayr_i18n_generator:generate`
 6. Use generated keys: `I18nKeys.app.welcome.tr(args: {'name': 'John'})`
 
 ### CLI Commands:
@@ -165,8 +165,8 @@ The `example/` directory should contain:
 
 ## 🔍 Common Issues & Solutions
 
-### Issue: Build runner not finding files
-- **Solution**: Check `build.yaml` configuration and `generate_for` patterns
+### Issue: CLI not generating files
+- **Solution**: Ensure `mayr_i18n_generation.output_file` is configured and the target file contains a `part '...g.dart'` directive
 
 ### Issue: Generated code has compilation errors
 - **Solution**: Validate Dart identifiers, escape special characters
@@ -179,7 +179,7 @@ The `example/` directory should contain:
 
 ## 📚 Additional Resources
 
-- [Dart build_runner documentation](https://pub.dev/packages/build_runner)
+
 - [source_gen documentation](https://pub.dev/packages/source_gen)
 - [Dart analyzer package](https://pub.dev/packages/analyzer)
 - [mayr_i18n package](https://pub.dev/packages/mayr_i18n) (if published)

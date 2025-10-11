@@ -9,7 +9,7 @@
 /// 2. Configure `mayr_i18n` in your pubspec.yaml
 /// 3. Create translation JSON files
 /// 4. Add `part 'filename.g.dart';` to your translations file
-/// 5. Run `dart run build_runner build`
+/// 5. Run `dart run mayr_i18n_generator:generate`
 library;
 
 export 'src/config.dart';
