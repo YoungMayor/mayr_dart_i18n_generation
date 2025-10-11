@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Example App",
+    "welcome": "Welcome {name}!",
+    "logout": "Goodbye",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Login",
+    "signup": "Sign Up",
+    "email": "Email",
+    "password": "Password",
+    "forgot_password": "Forgot Password?"
+  },
+  "errors": {
+    "network": "No internet connection",
+    "invalid_email": "Invalid email address",
+    "password_too_short": "Password must be at least 8 characters",
+    "unknown": "An unknown error occurred"
+  },
+  "profile": {
+    "name": "Name",
+    "details": {
+      "age": "Age",
+      "email": "Email",
+      "phone": "Phone Number"
+    },
+    "bio": "Biography"
+  }
+}
