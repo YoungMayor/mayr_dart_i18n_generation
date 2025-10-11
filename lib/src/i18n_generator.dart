@@ -25,7 +25,9 @@ class I18nGenerator extends Generator {
     try {
       // Read configuration from the package being built
       final config = I18nConfig.findAndRead();
-      log.info('Config loaded: lang_directory=${config.langDirectory}, default_locale=${config.defaultLocale}');
+      log.info(
+        'Config loaded: lang_directory=${config.langDirectory}, default_locale=${config.defaultLocale}',
+      );
 
       // Get the language directory path
       final langDir = config.getAbsoluteLangDirectory();
@@ -66,22 +68,24 @@ class I18nGenerator extends Generator {
   /// Checks if the library has a part directive for a .g.dart file.
   bool _hasPartDirective(LibraryReader library) {
     final element = library.element;
-    
+
     // Check the library source for part directives
     // This is more reliable than trying to navigate the AST
     try {
       final source = element.source;
-      if (source == null) return false;
-      
+
       final contents = source.contents.data;
-      
+
       // Look for part directive with .g.dart
       // Simple string search is sufficient
-      final hasPartDirective = contents.contains('.g.dart') && 
-                              (contents.contains("part '") || contents.contains('part "'));
-      
-      log.fine('Checking for .g.dart part directive in ${element.source.uri}: $hasPartDirective');
-      
+      final hasPartDirective =
+          contents.contains('.g.dart') &&
+          (contents.contains("part '") || contents.contains('part "'));
+
+      log.fine(
+        'Checking for .g.dart part directive in ${element.source.uri}: $hasPartDirective',
+      );
+
       return hasPartDirective;
     } catch (e) {
       log.warning('Error checking for part directive: $e');

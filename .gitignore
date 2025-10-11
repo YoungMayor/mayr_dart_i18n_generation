@@ -9,6 +9,7 @@ pubspec.lock
 # Build artifacts
 build/
 *.g.dart
+!example/lib/translations.g.dart
 
 # IDE files
 .vscode/

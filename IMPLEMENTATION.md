@@ -46,7 +46,6 @@ This document summarizes the complete implementation of the `mayr_i18n_generator
 - Creates nested classes for grouped keys
 - Includes comprehensive documentation
 - Sanitizes invalid identifiers
-- Adds extension methods for translation
 - **Tested**: 9 unit tests
 
 #### Generator (`lib/src/i18n_generator.dart`)

@@ -51,15 +51,6 @@ void main() {
       expect(code, contains("final String email = 'profile.details.email';"));
     });
 
-    test('emits extension method for translation', () {
-      final tree = KeyTreeBuilder.buildTree({'key': 'value'});
-
-      final code = CodeEmitter.emitCode(tree, 'translations.dart');
-
-      expect(code, contains('extension I18nTranslationExtension on String'));
-      expect(code, contains('String tr([Map<String, dynamic>? args])'));
-    });
-
     test('includes documentation comments', () {
       final tree = KeyTreeBuilder.buildTree({
         'app': {'welcome': 'Welcome'},

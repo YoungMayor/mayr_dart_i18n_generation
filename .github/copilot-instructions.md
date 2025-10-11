@@ -30,7 +30,6 @@
 4. **Code Emitter** (`src/code_emitter.dart`)
    - Generates Dart code from the key tree
    - Creates classes like `I18nKeys`, `_AppKeys`, `_ErrorKeys`, etc.
-   - Adds extension methods for translation
 
 5. **Generator** (`src/i18n_generator.dart`)
    - Integrates with `build_runner` via `source_gen`

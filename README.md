@@ -116,10 +116,6 @@ class _AppKeys {
 class _ErrorKeys {
   final network = 'errors.network';
 }
-
-extension I18nTrExtension on String {
-  String tr({Map<String, dynamic>? args}) => MayrI18n.tr(this, args: args);
-}
 ```
 
 ---

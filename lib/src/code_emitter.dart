@@ -53,28 +53,6 @@ class CodeEmitter {
       }
     }
 
-    // Extension method for .tr()
-    buffer.writeln('/// Extension to add translation method to String.');
-    buffer.writeln('extension I18nTranslationExtension on String {');
-    buffer.writeln('  /// Translates this key using the current locale.');
-    buffer.writeln('  ///');
-    buffer.writeln(
-      '  /// [args] - Optional arguments for placeholder replacement.',
-    );
-    buffer.writeln('  /// Example: "app.welcome".tr(args: {"name": "John"})');
-    buffer.writeln('  String tr([Map<String, dynamic>? args]) {');
-    buffer.writeln('    // This assumes mayr_i18n is available');
-    buffer.writeln('    // Users should implement their own translation logic');
-    buffer.writeln('    // or use this with the mayr_i18n package');
-    buffer.writeln('    throw UnimplementedError(');
-    buffer.writeln("      'Translation method not implemented. '");
-    buffer.writeln(
-      "      'Please implement this extension or use mayr_i18n package.',",
-    );
-    buffer.writeln('    );');
-    buffer.writeln('  }');
-    buffer.writeln('}');
-
     return buffer.toString();
   }
 
