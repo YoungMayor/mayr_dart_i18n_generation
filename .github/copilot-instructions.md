@@ -39,6 +39,10 @@
 
 ### CLI Tools (in `bin/`):
 - `generate.dart` - Manual code generation
+  - Reads `output_file` configuration from `mayr_i18n_generation` section
+  - Creates the output file (with part directive) if it doesn't exist
+  - Generates the `.g.dart` file with translation keys
+  - Default output: `lib/generated/translations.dart`
 
 **Note**: CLI commands for verifying, syncing, auditing, and creating translation files are provided by the `mayr_i18n` package, not this generator package.
 

@@ -85,52 +85,34 @@ lib/
 
 ---
 
-### 2️⃣ Create `lib/translations.dart`
+### 2️⃣ Run code generation
 
-```dart
-import 'package:mayr_i18n/mayr_i18n.dart';
+The CLI command will automatically create the necessary files:
 
-part 'translations.g.dart';
+```bash
+dart run mayr_i18n_generator:generate
 ```
 
----
+This creates:
+- `lib/translations.dart` (or your configured `output_file`) with the part directive
+- `lib/translations.g.dart` with the generated translation keys
 
-### 3️⃣ Generate code
-
-Run the build command:
+Alternatively, use build_runner:
 
 ```bash
 dart run build_runner build
 ```
 
-✅ This generates `lib/translations.g.dart`:
-
-```dart
-// GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: constant_identifier_names, non_constant_identifier_names
-
-part of 'translations.dart';
-
-class I18nKeys {
-  static const app = _AppKeys();
-  static const errors = _ErrorKeys();
-}
-
-class _AppKeys {
-  final welcome = 'app.welcome';
-  final logout = 'app.logout';
-}
-
-class _ErrorKeys {
-  final network = 'errors.network';
-}
-```
+**Note**: You don't need to manually create the files - the generator does it for you!
 
 ---
 
-### 4️⃣ Use it in code
+### 3️⃣ Use the generated keys
+
+After generation, use the type-safe keys in your code:
 
 ```dart
+// Access the generated keys
 final greeting = I18nKeys.app.welcome.tr(args: {'name': 'Mayor'});
 print(greeting); // "Welcome Mayor"
 ```
@@ -152,9 +134,12 @@ dart run mayr_i18n_generator:generate
 ```
 
 This will:
-- Find all Dart files with `.g.dart` part directives
+- Read the `output_file` configuration from `mayr_i18n_generation` section in `pubspec.yaml`
+- Create the output file (if it doesn't exist) with the necessary part directive
 - Read your JSON translation files
-- Generate type-safe translation key classes
+- Generate type-safe translation key classes in the `.g.dart` file
+
+The command will create the file at the configured path (default: `lib/generated/translations.dart`) along with its generated counterpart (`translations.g.dart`).
 
 **Note**: Additional CLI commands for verification, syncing, and auditing translations are available in the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package.
 

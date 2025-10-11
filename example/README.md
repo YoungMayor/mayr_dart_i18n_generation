@@ -43,6 +43,10 @@ dart pub get
 dart run mayr_i18n_generation:generate
 ```
 
+The CLI tool will automatically:
+1. Create `lib/translations.dart` (if it doesn't exist) with the necessary part directive
+2. Generate `lib/translations.g.dart` with type-safe translation keys
+
 ## Run the Example
 
 After generating the code, run the example:
