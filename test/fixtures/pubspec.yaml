@@ -1,0 +1,9 @@
+name: test_project
+version: 1.0.0
+
+environment:
+  sdk: ^3.9.2
+
+mayr_i18n:
+  lang_directory: test/fixtures
+  default_locale: en

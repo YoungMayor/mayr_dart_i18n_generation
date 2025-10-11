@@ -1,0 +1,24 @@
+name: mayr_i18n_generation_example
+description: Example project demonstrating mayr_i18n_generation usage
+version: 1.0.0
+publish_to: none
+
+environment:
+  sdk: ^3.9.2
+
+# dependencies:
+  # In a real project, you would add mayr_i18n here
+  # mayr_i18n: ^1.0.0
+
+dev_dependencies:
+  mayr_i18n_generation:
+    path: ../
+
+# Configure the i18n generator
+mayr_i18n:
+  lang_directory: assets/lang
+  default_locale: en
+
+# Configure the code generator
+mayr_i18n_generation:
+  output_file: lib/translations.dart  # Default is lib/generated/translations.dart
