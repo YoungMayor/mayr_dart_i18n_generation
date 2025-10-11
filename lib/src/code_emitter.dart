@@ -176,7 +176,7 @@ class CodeEmitter {
     final val = defaultValues?[fullPath];
 
     if (val != null) {
-      return "/// _${fullPath}_\n  ///\n  /// ### ${_escapeDoc(val)}";
+      return "/// _${fullPath}_\n  /// ### ${_escapeDoc(val)}";
     }
 
     return "/// Translation key: '$fullPath'";

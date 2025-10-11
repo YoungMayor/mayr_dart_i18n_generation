@@ -24,23 +24,19 @@ class I18nKeys {
 class _AppKeys {
   const _AppKeys._();
 
-  /// _app.title_
-  ///
+  /// __app.title__
   /// ### Example App
   final String title = 'app.title';
 
-  /// _app.welcome_
-  ///
+  /// __app.welcome__
   /// ### Welcome {name}!
   final String welcome = 'app.welcome';
 
-  /// _app.logout_
-  ///
+  /// __app.logout__
   /// ### Goodbye
   final String logout = 'app.logout';
 
-  /// _app.settings_
-  ///
+  /// __app.settings__
   /// ### Settings
   final String settings = 'app.settings';
 }
@@ -49,28 +45,23 @@ class _AppKeys {
 class _AuthKeys {
   const _AuthKeys._();
 
-  /// _auth.login_
-  ///
+  /// __auth.login__
   /// ### Login
   final String login = 'auth.login';
 
-  /// _auth.signup_
-  ///
+  /// __auth.signup__
   /// ### Sign Up
   final String signup = 'auth.signup';
 
-  /// _auth.email_
-  ///
+  /// __auth.email__
   /// ### Email
   final String email = 'auth.email';
 
-  /// _auth.password_
-  ///
+  /// __auth.password__
   /// ### Password
   final String password = 'auth.password';
 
-  /// _auth.forgot_password_
-  ///
+  /// __auth.forgot_password__
   /// ### Forgot Password?
   final String forgot_password = 'auth.forgot_password';
 }
@@ -79,23 +70,19 @@ class _AuthKeys {
 class _ErrorsKeys {
   const _ErrorsKeys._();
 
-  /// _errors.network_
-  ///
+  /// __errors.network__
   /// ### No internet connection
   final String network = 'errors.network';
 
-  /// _errors.invalid_email_
-  ///
+  /// __errors.invalid_email__
   /// ### Invalid email address
   final String invalid_email = 'errors.invalid_email';
 
-  /// _errors.password_too_short_
-  ///
+  /// __errors.password_too_short__
   /// ### Password must be at least 8 characters
   final String password_too_short = 'errors.password_too_short';
 
-  /// _errors.unknown_
-  ///
+  /// __errors.unknown__
   /// ### An unknown error occurred
   final String unknown = 'errors.unknown';
 }
@@ -104,16 +91,14 @@ class _ErrorsKeys {
 class _ProfileKeys {
   const _ProfileKeys._();
 
-  /// _profile.name_
-  ///
+  /// __profile.name__
   /// ### Name
   final String name = 'profile.name';
 
   /// Translation keys under 'profile.details.*'
   final details = const _ProfileDetailsKeys._();
 
-  /// _profile.bio_
-  ///
+  /// __profile.bio__
   /// ### Biography
   final String bio = 'profile.bio';
 }
@@ -122,18 +107,15 @@ class _ProfileKeys {
 class _ProfileDetailsKeys {
   const _ProfileDetailsKeys._();
 
-  /// _profile.details.age_
-  ///
+  /// __profile.details.age__
   /// ### Age
   final String age = 'profile.details.age';
 
-  /// _profile.details.email_
-  ///
+  /// __profile.details.email__
   /// ### Email
   final String email = 'profile.details.email';
 
-  /// _profile.details.phone_
-  ///
+  /// __profile.details.phone__
   /// ### Phone Number
   final String phone = 'profile.details.phone';
 }
