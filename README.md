@@ -1,39 +1,284 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+![License](https://img.shields.io/badge/license-MIT-blue.svg?label=Licence)
+![Platform](https://img.shields.io/badge/Platform-Flutter-blue.svg)
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages). 
+![Pub Version](https://img.shields.io/pub/v/mayr_i18n_generation?style=plastic&label=Version)
+![Pub.dev Score](https://img.shields.io/pub/points/mayr_i18n_generation?label=Score&style=plastic)
+![Pub Likes](https://img.shields.io/pub/likes/mayr_i18n_generation?label=Likes&style=plastic)
+![Pub.dev Publisher](https://img.shields.io/pub/publisher/mayr_i18n_generation?label=Publisher&style=plastic)
+![Downloads](https://img.shields.io/pub/dm/mayr_i18n_generation.svg?label=Downloads&style=plastic)
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages). 
--->
+![Build Status](https://img.shields.io/github/actions/workflow/status/YoungMayor/mayr_dart_i18n_generation/ci.yaml?label=Build)
+![Issues](https://img.shields.io/github/issues/YoungMayor/mayr_dart_i18n_generation.svg?label=Issues)
+![Last Commit](https://img.shields.io/github/last-commit/YoungMayor/mayr_dart_i18n_generation.svg?label=Latest%20Commit)
+![Contributors](https://img.shields.io/github/contributors/YoungMayor/mayr_dart_i18n_generation.svg?label=Contributors)
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
 
-## Features
+# 🌍 mayr_i18n_generator
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+### Code generation for [`mayr_i18n`](https://pub.dev/packages/mayr_i18n)
 
-## Getting started
+`mayr_i18n_generator` provides automatic **type-safe translation key generation** for projects using `mayr_i18n`.
+It scans your JSON language files and generates Dart classes with structured translation keys and autocompletion support — making localization clean, reliable, and developer-friendly.
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+---
 
-## Usage
+## 🚀 Installation
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+Add the packages to your `pubspec.yaml`:
 
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  mayr_i18n: ^1.0.0
+
+dev_dependencies:
+  build_runner: ^2.4.0
+  mayr_i18n_generator: ^1.0.0
 ```
 
-## Additional information
+---
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
+## ⚙️ Configuration
+
+In your root `pubspec.yaml`, configure your translation settings under `mayr_i18n`:
+
+```yaml
+mayr_i18n:
+  lang_directory: assets/lang   # Directory containing JSON language files
+  default_locale: en            # Default locale key
+```
+
+Example directory structure:
+
+```
+assets/
+  lang/
+    en.json
+    fr.json
+    genz.json
+```
+
+---
+
+## 🧠 Example
+
+### 1️⃣ Define your translation JSON
+
+```json
+{
+  "app": {
+    "welcome": "Welcome {name}",
+    "logout": "Goodbye"
+  },
+  "errors": {
+    "network": "No internet connection"
+  }
+}
+```
+
+---
+
+### 2️⃣ Create `lib/translations.dart`
+
+```dart
+import 'package:mayr_i18n/mayr_i18n.dart';
+
+part 'translations.g.dart';
+```
+
+---
+
+### 3️⃣ Generate code
+
+Run the build command:
+
+```bash
+dart run build_runner build
+```
+
+✅ This generates `lib/translations.g.dart`:
+
+```dart
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: constant_identifier_names, non_constant_identifier_names
+
+part of 'translations.dart';
+
+class I18nKeys {
+  static const app = _AppKeys();
+  static const errors = _ErrorKeys();
+}
+
+class _AppKeys {
+  final welcome = 'app.welcome';
+  final logout = 'app.logout';
+}
+
+class _ErrorKeys {
+  final network = 'errors.network';
+}
+
+extension I18nTrExtension on String {
+  String tr({Map<String, dynamic>? args}) => MayrI18n.tr(this, args: args);
+}
+```
+
+---
+
+### 4️⃣ Use it in code
+
+```dart
+final greeting = I18nKeys.app.welcome.tr(args: {'name': 'Mayor'});
+print(greeting); // "Welcome Mayor"
+```
+
+Or access by string:
+
+```dart
+print('app.welcome'.tr()); // "Goodbye"
+```
+
+---
+
+## 🔍 CLI Commands
+
+### Verify missing keys
+
+Checks all JSON files and warns if some locales are missing keys.
+
+```bash
+dart run mayr_i18n verify
+```
+
+### Sync missing keys
+
+Adds missing keys to other JSON files (empty by default).
+
+```bash
+dart run mayr_i18n sync
+```
+
+### Audit usage
+
+Scans your codebase and reports:
+
+* Keys used but not defined in any JSON
+* Keys defined in JSON but unused in code
+
+```bash
+dart run mayr_i18n audit
+```
+
+### Create new language file
+
+```bash
+dart run mayr_i18n create genz
+```
+
+Creates `assets/lang/genz.json` with empty placeholders.
+
+---
+
+## 🧩 build.yaml (optional)
+
+You can customize generation with a `build.yaml` (not required):
+
+```yaml
+targets:
+  $default:
+    builders:
+      mayr_i18n_generator:
+        generate_for:
+          - lib/**.dart
+builders:
+  mayr_i18n_generator:
+    import: "package:mayr_i18n_generator/mayr_i18n_generator.dart"
+    builder_factories: ["i18nBuilder"]
+    build_extensions: {".dart": [".g.dart"]}
+    auto_apply: dependents
+    build_to: source
+```
+
+---
+
+## 💡 Advanced
+
+### Code generation shortcut
+
+You can run directly:
+
+```bash
+dart run mayr_i18n_generator:generate
+```
+
+instead of using `build_runner`.
+
+### Supports Nested JSON
+
+```json
+{
+  "profile": {
+    "name": "Name",
+    "details": {
+      "age": "Age",
+      "email": "Email"
+    }
+  }
+}
+```
+
+Accessed as:
+
+```dart
+I18nKeys.profile.details.email.tr();
+```
+
+---
+
+## 🧱 Output Example
+
+```dart
+I18nKeys.app.welcome.tr(args: {'name': 'Tovia'});
+I18nKeys.errors.network.tr();
+```
+
+---
+
+## 🧩 Integration with Flutter
+
+When using the Flutter wrapper (`mayr_i18n_flutter`), you’ll also get:
+
+* Reactive locale switching
+* Persistent locale preferences
+* Built-in `LanguageSwitcher` widget
+
+---
+
+### 🧑‍💻 Author
+
+**MayR Labs**
+
+Crafting clean, reliable, and human-centric Flutter and Dart solutions.
+🌍 [mayrlabs.com](https://mayrlabs.com)
+
+---
+
+### 📜 Licence
+This package is licensed under the MIT License — which means you are free to use it for commercial and non-commercial projects, with proper attribution.
+
+> See the [LICENSE](LICENSE) file for more details.
+
+MIT © 2025 [MayR Labs](https://github.com/mayrlabs)
+
+---
+
+## 🌟 Support
+
+If you find this package helpful, please consider giving it a ⭐️ on GitHub — it motivates and helps the project grow!
+
+You can also support by:
+- Sharing the package with your friends, colleagues, and tech communities.
+- Using it in your projects and giving feedback.
+- Contributing new ideas, features, or improvements.
+
+> Every little bit of support counts! 🚀💙
+
