@@ -38,10 +38,8 @@
 
 ### CLI Tools (in `bin/`):
 - `generate.dart` - Manual code generation
-- `verify.dart` - Check for missing keys across locales
-- `sync.dart` - Sync keys across locale files
-- `audit.dart` - Report unused/undefined keys
-- `create.dart` - Create new language files
+
+**Note**: CLI commands for verifying, syncing, auditing, and creating translation files are provided by the `mayr_i18n` package, not this generator package.
 
 ## 🔧 Development Guidelines
 
@@ -119,10 +117,9 @@ The `example/` directory should contain:
 6. Use generated keys: `I18nKeys.app.welcome.tr(args: {'name': 'John'})`
 
 ### CLI Commands:
-- `dart run mayr_i18n_generator:verify` - Check for missing keys
-- `dart run mayr_i18n_generator:sync` - Sync keys across files
-- `dart run mayr_i18n_generator:audit` - Find unused/undefined keys
-- `dart run mayr_i18n_generator:create <locale>` - Create new locale file
+- `dart run mayr_i18n_generator:generate` - Generate translation keys manually
+
+**Note**: For verifying, syncing, auditing, and creating translation files, use the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package CLI commands.
 
 ## 📝 Important Notes
 

@@ -139,42 +139,20 @@ print('app.welcome'.tr()); // "Goodbye"
 
 ---
 
-## 🔍 CLI Commands
+## 🔧 Manual Code Generation
 
-### Verify missing keys
-
-Checks all JSON files and warns if some locales are missing keys.
+If you prefer to generate code manually instead of using `build_runner`, you can use the CLI command:
 
 ```bash
-dart run mayr_i18n verify
+dart run mayr_i18n_generator:generate
 ```
 
-### Sync missing keys
+This will:
+- Find all Dart files with `.g.dart` part directives
+- Read your JSON translation files
+- Generate type-safe translation key classes
 
-Adds missing keys to other JSON files (empty by default).
-
-```bash
-dart run mayr_i18n sync
-```
-
-### Audit usage
-
-Scans your codebase and reports:
-
-* Keys used but not defined in any JSON
-* Keys defined in JSON but unused in code
-
-```bash
-dart run mayr_i18n audit
-```
-
-### Create new language file
-
-```bash
-dart run mayr_i18n create genz
-```
-
-Creates `assets/lang/genz.json` with empty placeholders.
+**Note**: Additional CLI commands for verification, syncing, and auditing translations are available in the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package.
 
 ---
 

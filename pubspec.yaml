@@ -27,10 +27,6 @@ dev_dependencies:
 executables:
   mayr_i18n_generator:
   generate: generate
-  verify: verify
-  sync: sync
-  audit: audit
-  create: create
 
 topics:
   - i18n

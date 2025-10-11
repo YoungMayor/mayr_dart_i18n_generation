@@ -58,7 +58,7 @@ This document summarizes the complete implementation of the `mayr_i18n_generator
 
 ### 3. CLI Tools (bin/)
 
-All CLI tools are fully functional and tested:
+The package provides a single CLI tool:
 
 #### `generate.dart`
 - Manually generates translation keys
@@ -66,29 +66,7 @@ All CLI tools are fully functional and tested:
 - Shows progress and results
 - **Status**: ✅ Working
 
-#### `verify.dart`
-- Checks all JSON files for missing keys
-- Reports locales with incomplete translations
-- Shows total key count
-- **Status**: ✅ Working
-
-#### `sync.dart`
-- Adds missing keys to locale files
-- Preserves existing translations
-- Creates empty placeholders for new keys
-- **Status**: ✅ Working
-
-#### `audit.dart`
-- Scans codebase for key usage
-- Reports unused keys in JSON
-- Reports undefined keys in code
-- **Status**: ✅ Working
-
-#### `create.dart`
-- Creates new language files
-- Uses existing locale as template
-- Provides empty values for translation
-- **Status**: ✅ Working
+**Note**: Additional CLI commands (verify, sync, audit, create) are available in the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package.
 
 ### 4. Build System
 
@@ -200,6 +178,10 @@ example/
 - **Compile-time safety** for translation keys
 - **Nested key support** for organized translations
 - **Multi-locale management** with validation
+- **build_runner integration** for automatic code generation
+- **Manual CLI generation** as an alternative
+
+**Note**: For managing translations (verifying, syncing, auditing), use the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package.
 
 ### For Developers
 - **build_runner integration** for automatic generation
@@ -219,7 +201,7 @@ example/
 | Code Coverage | High |
 | Linting Issues | 0 |
 | Documentation Coverage | 100% |
-| CLI Tools | 5 |
+| CLI Tools | 1 (generate) |
 | Example Projects | 1 |
 
 ---
@@ -267,12 +249,13 @@ The package is production-ready and can be:
 
 1. **Complete implementation** from scratch
 2. **41 comprehensive tests** with 100% pass rate
-3. **5 CLI tools** for translation management
+3. **CLI tool for generation** with additional tools in mayr_i18n package
 4. **Full documentation** including guides and examples
 5. **Zero linting issues** with Dart best practices
 6. **Working example** demonstrating all features
 7. **GitHub Copilot instructions** for AI assistance
 8. **Clean architecture** with separated concerns
+9. **build_runner integration** that works correctly
 
 ---
 

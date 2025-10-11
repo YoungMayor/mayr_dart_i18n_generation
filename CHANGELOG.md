@@ -8,16 +8,14 @@ A complete Dart code generation package for type-safe i18n translation keys.
 
 - ✨ **Type-safe translation keys** - Generate Dart classes from JSON translation files
 - 🏗️ **build_runner integration** - Automatic code generation with build_runner
-- 🔧 **CLI tools** for managing translations:
+- 🔧 **CLI tool** for manual code generation:
   - `generate` - Generate translation keys manually
-  - `verify` - Check for missing keys across locales
-  - `sync` - Synchronize keys across all locale files
-  - `audit` - Find unused or undefined translation keys
-  - `create` - Create new language files with proper structure
 - 📦 **Nested JSON support** - Handle deeply nested translation structures
 - 🌐 **Multi-locale support** - Manage multiple language files easily
 - 📝 **Comprehensive documentation** - Full API docs and examples
 - ✅ **Well-tested** - Extensive test coverage for all components
+
+**Note**: Commands for verifying, syncing, and auditing translations are available in the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package.
 
 #### Core Components
 

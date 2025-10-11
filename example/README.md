@@ -51,31 +51,7 @@ After generating the code, run the example:
 dart run mayr_i18n_generation_example.dart
 ```
 
-## CLI Commands
-
-### Verify translations
-Check if all locales have the same keys:
-```bash
-dart run mayr_i18n_generation:verify
-```
-
-### Sync translations
-Add missing keys to locale files:
-```bash
-dart run mayr_i18n_generation:sync
-```
-
-### Audit key usage
-Find unused or undefined keys:
-```bash
-dart run mayr_i18n_generation:audit
-```
-
-### Create new locale
-Create a new language file:
-```bash
-dart run mayr_i18n_generation:create es
-```
+**Note**: Additional CLI commands for verifying, syncing, and auditing translations are available in the [`mayr_i18n`](https://pub.dev/packages/mayr_i18n) package.
 
 ## Project Structure
 

@@ -16,15 +16,20 @@ class I18nGenerator extends Generator {
   FutureOr<String?> generate(LibraryReader library, BuildStep buildStep) async {
     // Check if this library has a part directive for .g.dart
     if (!_hasPartDirective(library)) {
+      log.info('Skipping ${buildStep.inputId} - no .g.dart part directive');
       return null;
     }
 
-    try {
-      // Read configuration
-      final config = I18nConfig.findAndRead();
+    log.info('Generating i18n code for ${buildStep.inputId}');
 
-      // Get the language directory path relative to the build
+    try {
+      // Read configuration from the package being built
+      final config = I18nConfig.findAndRead();
+      log.info('Config loaded: lang_directory=${config.langDirectory}, default_locale=${config.defaultLocale}');
+
+      // Get the language directory path
       final langDir = config.getAbsoluteLangDirectory();
+      log.info('Looking for translations in: $langDir');
 
       // Parse all JSON files
       final translations = JsonParser.parseDirectory(langDir);
@@ -33,6 +38,8 @@ class I18nGenerator extends Generator {
         log.warning('No translation files found in $langDir');
         return null;
       }
+
+      log.info('Found ${translations.length} translation file(s)');
 
       // Build key trees from all translations
       final trees = translations.map((t) {
@@ -48,6 +55,7 @@ class I18nGenerator extends Generator {
       // Generate the code
       final generatedCode = CodeEmitter.emitCode(mergedTree, partFileName);
 
+      log.info('Generated ${generatedCode.length} characters of code');
       return generatedCode;
     } catch (e, stackTrace) {
       log.severe('Error generating i18n code: $e', e, stackTrace);
@@ -58,15 +66,27 @@ class I18nGenerator extends Generator {
   /// Checks if the library has a part directive for a .g.dart file.
   bool _hasPartDirective(LibraryReader library) {
     final element = library.element;
-
-    for (final part in element.parts) {
-      final uriString = part.uri.toString();
-      if (uriString.endsWith('.g.dart')) {
-        return true;
-      }
+    
+    // Check the library source for part directives
+    // This is more reliable than trying to navigate the AST
+    try {
+      final source = element.source;
+      if (source == null) return false;
+      
+      final contents = source.contents.data;
+      
+      // Look for part directive with .g.dart
+      // Simple string search is sufficient
+      final hasPartDirective = contents.contains('.g.dart') && 
+                              (contents.contains("part '") || contents.contains('part "'));
+      
+      log.fine('Checking for .g.dart part directive in ${element.source.uri}: $hasPartDirective');
+      
+      return hasPartDirective;
+    } catch (e) {
+      log.warning('Error checking for part directive: $e');
+      return false;
     }
-
-    return false;
   }
 
   /// Gets the source file name from the library.
