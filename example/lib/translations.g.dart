@@ -9,13 +9,10 @@ class I18nKeys {
 
   /// Translation keys under 'app.*'
   static const app = _AppKeys._();
-
   /// Translation keys under 'auth.*'
   static const auth = _AuthKeys._();
-
   /// Translation keys under 'errors.*'
   static const errors = _ErrorsKeys._();
-
   /// Translation keys under 'profile.*'
   static const profile = _ProfileKeys._();
 }
@@ -26,13 +23,10 @@ class _AppKeys {
 
   /// Translation key: 'app.title'
   final String title = 'app.title';
-
   /// Translation key: 'app.welcome'
   final String welcome = 'app.welcome';
-
   /// Translation key: 'app.logout'
   final String logout = 'app.logout';
-
   /// Translation key: 'app.settings'
   final String settings = 'app.settings';
 }
@@ -43,16 +37,12 @@ class _AuthKeys {
 
   /// Translation key: 'auth.login'
   final String login = 'auth.login';
-
   /// Translation key: 'auth.signup'
   final String signup = 'auth.signup';
-
   /// Translation key: 'auth.email'
   final String email = 'auth.email';
-
   /// Translation key: 'auth.password'
   final String password = 'auth.password';
-
   /// Translation key: 'auth.forgot_password'
   final String forgot_password = 'auth.forgot_password';
 }
@@ -63,13 +53,10 @@ class _ErrorsKeys {
 
   /// Translation key: 'errors.network'
   final String network = 'errors.network';
-
   /// Translation key: 'errors.invalid_email'
   final String invalid_email = 'errors.invalid_email';
-
   /// Translation key: 'errors.password_too_short'
   final String password_too_short = 'errors.password_too_short';
-
   /// Translation key: 'errors.unknown'
   final String unknown = 'errors.unknown';
 }
@@ -80,10 +67,8 @@ class _ProfileKeys {
 
   /// Translation key: 'profile.name'
   final String name = 'profile.name';
-
   /// Translation keys under 'profile.details.*'
   final details = const _DetailsKeys._();
-
   /// Translation key: 'profile.bio'
   final String bio = 'profile.bio';
 }
@@ -94,10 +79,9 @@ class _DetailsKeys {
 
   /// Translation key: 'profile.details.age'
   final String age = 'profile.details.age';
-
   /// Translation key: 'profile.details.email'
   final String email = 'profile.details.email';
-
   /// Translation key: 'profile.details.phone'
   final String phone = 'profile.details.phone';
 }
+
