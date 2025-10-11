@@ -1,0 +1,30 @@
+{
+  "app": {
+    "title": "Application Exemple",
+    "welcome": "Bienvenue {name}!",
+    "logout": "Au revoir",
+    "settings": "Paramètres"
+  },
+  "auth": {
+    "login": "Connexion",
+    "signup": "S'inscrire",
+    "email": "Email",
+    "password": "Mot de passe",
+    "forgot_password": "Mot de passe oublié?"
+  },
+  "errors": {
+    "network": "Pas de connexion Internet",
+    "invalid_email": "Adresse email invalide",
+    "password_too_short": "Le mot de passe doit contenir au moins 8 caractères",
+    "unknown": "Une erreur inconnue s'est produite"
+  },
+  "profile": {
+    "name": "Nom",
+    "details": {
+      "age": "Âge",
+      "email": "Email",
+      "phone": "Numéro de téléphone"
+    },
+    "bio": "Biographie"
+  }
+}
