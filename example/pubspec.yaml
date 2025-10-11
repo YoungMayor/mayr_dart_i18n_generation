@@ -6,7 +6,7 @@ publish_to: none
 environment:
   sdk: ^3.9.2
 
-dependencies:
+# dependencies:
   # In a real project, you would add mayr_i18n here
   # mayr_i18n: ^1.0.0
 
