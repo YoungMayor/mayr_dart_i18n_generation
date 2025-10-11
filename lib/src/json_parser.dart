@@ -32,7 +32,7 @@ class JsonParser {
   /// Throws [FormatException] if the JSON is invalid.
   static ParsedTranslations parseFile(String filePath) {
     final file = File(filePath);
-    
+
     if (!file.existsSync()) {
       throw FileSystemException('Translation file not found', filePath);
     }
@@ -42,7 +42,7 @@ class JsonParser {
 
     try {
       final decoded = jsonDecode(content);
-      
+
       if (decoded is! Map<String, dynamic>) {
         throw FormatException(
           'Translation file must contain a JSON object',
@@ -71,10 +71,7 @@ class JsonParser {
     final directory = Directory(directoryPath);
 
     if (!directory.existsSync()) {
-      throw FileSystemException(
-        'Language directory not found',
-        directoryPath,
-      );
+      throw FileSystemException('Language directory not found', directoryPath);
     }
 
     final jsonFiles = directory
@@ -84,9 +81,7 @@ class JsonParser {
         .toList();
 
     if (jsonFiles.isEmpty) {
-      throw StateError(
-        'No JSON translation files found in $directoryPath',
-      );
+      throw StateError('No JSON translation files found in $directoryPath');
     }
 
     return jsonFiles.map((file) => parseFile(file.path)).toList();
@@ -112,23 +107,25 @@ class JsonParser {
 
     // Get all keys from all locales
     final allKeys = <String, Set<String>>{};
-    
+
     for (final translation in allTranslations) {
       allKeys[translation.locale] = _flattenKeys(translation.translations);
     }
 
     // Find the union of all keys
-    final allPossibleKeys = allKeys.values
-        .fold<Set<String>>({}, (acc, keys) => acc.union(keys));
+    final allPossibleKeys = allKeys.values.fold<Set<String>>(
+      {},
+      (acc, keys) => acc.union(keys),
+    );
 
     // Check for missing keys in each locale
     final missingKeys = <String, List<String>>{};
-    
+
     for (final entry in allKeys.entries) {
       final locale = entry.key;
       final keys = entry.value;
       final missing = allPossibleKeys.difference(keys).toList()..sort();
-      
+
       if (missing.isNotEmpty) {
         missingKeys[locale] = missing;
       }
@@ -140,12 +137,15 @@ class JsonParser {
   /// Flattens a nested map into a set of dot-notation keys.
   ///
   /// Example: {'app': {'welcome': 'Hello'}} -> {'app.welcome'}
-  static Set<String> _flattenKeys(Map<String, dynamic> map, [String prefix = '']) {
+  static Set<String> _flattenKeys(
+    Map<String, dynamic> map, [
+    String prefix = '',
+  ]) {
     final keys = <String>{};
 
     for (final entry in map.entries) {
       final key = prefix.isEmpty ? entry.key : '$prefix.${entry.key}';
-      
+
       if (entry.value is Map<String, dynamic>) {
         keys.addAll(_flattenKeys(entry.value, key));
       } else {

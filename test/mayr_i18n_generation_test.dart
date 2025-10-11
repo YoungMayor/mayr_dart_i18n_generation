@@ -17,17 +17,12 @@ void main() {
 
       // 2. Build a sample key tree
       final sampleData = {
-        'app': {
-          'title': 'My App',
-          'welcome': 'Welcome {name}',
-        },
-        'errors': {
-          'network': 'No connection',
-        },
+        'app': {'title': 'My App', 'welcome': 'Welcome {name}'},
+        'errors': {'network': 'No connection'},
       };
 
       final tree = KeyTreeBuilder.buildTree(sampleData);
-      
+
       // 3. Verify tree structure
       expect(tree.children, hasLength(2));
       expect(tree.children['app']?.isLeaf, isFalse);
@@ -53,4 +48,3 @@ void main() {
     });
   });
 }
-

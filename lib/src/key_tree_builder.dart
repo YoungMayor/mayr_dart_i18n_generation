@@ -83,7 +83,7 @@ class KeyTreeBuilder {
         // This is a nested object
         final childrenMap = <String, KeyNode>{};
         _buildTreeRecursive(value, childrenMap, fullPath);
-        
+
         parentChildren[key] = KeyNode(
           key: key,
           children: childrenMap,
@@ -107,12 +107,7 @@ class KeyTreeBuilder {
   /// Useful when multiple locale files should have the same structure.
   static KeyNode mergeTrees(List<KeyNode> trees) {
     if (trees.isEmpty) {
-      return KeyNode(
-        key: 'root',
-        children: {},
-        isLeaf: false,
-        fullPath: '',
-      );
+      return KeyNode(key: 'root', children: {}, isLeaf: false, fullPath: '');
     }
 
     if (trees.length == 1) {

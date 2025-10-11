@@ -1,5 +1,7 @@
 #!/usr/bin/env dart
+
 /// CLI tool for syncing translation keys across locales.
+library;
 
 import 'dart:io';
 import 'dart:convert';
@@ -32,7 +34,9 @@ void main(List<String> args) async {
       exit(1);
     }
 
-    print('   Found ${translations.length} locale(s): ${translations.map((t) => t.locale).join(", ")}\n');
+    print(
+      '   Found ${translations.length} locale(s): ${translations.map((t) => t.locale).join(", ")}\n',
+    );
 
     // Validate locales
     print('🔍 Checking for missing keys...');
@@ -53,26 +57,28 @@ void main(List<String> args) async {
 
     // Sync missing keys
     print('🔄 Syncing missing keys...\n');
-    
+
     var updatedCount = 0;
     for (final translation in translations) {
       if (missingKeys.containsKey(translation.locale)) {
         final missing = missingKeys[translation.locale]!;
-        print('📝 Adding ${missing.length} key(s) to ${translation.locale}.json...');
-        
+        print(
+          '📝 Adding ${missing.length} key(s) to ${translation.locale}.json...',
+        );
+
         // Read the current data
         final updatedData = Map<String, dynamic>.from(translation.translations);
-        
+
         // Add missing keys with empty values
         for (final key in missing) {
           _setNestedValue(updatedData, key, '');
         }
-        
+
         // Write back to file
         final encoder = JsonEncoder.withIndent('  ');
         final jsonString = encoder.convert(updatedData);
         File(translation.filePath).writeAsStringSync('$jsonString\n');
-        
+
         updatedCount++;
         print('   ✅ Updated ${translation.filePath}');
       }
@@ -96,7 +102,7 @@ Set<String> _flattenKeys(Map<String, dynamic> map, [String prefix = '']) {
 
   for (final entry in map.entries) {
     final key = prefix.isEmpty ? entry.key : '$prefix.${entry.key}';
-    
+
     if (entry.value is Map<String, dynamic>) {
       keys.addAll(_flattenKeys(entry.value, key));
     } else {
@@ -110,7 +116,7 @@ Set<String> _flattenKeys(Map<String, dynamic> map, [String prefix = '']) {
 /// Sets a value in a nested map using dot notation.
 void _setNestedValue(Map<String, dynamic> map, String key, dynamic value) {
   final parts = key.split('.');
-  
+
   if (parts.length == 1) {
     map[key] = value;
     return;

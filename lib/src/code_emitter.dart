@@ -13,7 +13,9 @@ class CodeEmitter {
 
     // Header
     buffer.writeln('// GENERATED CODE - DO NOT MODIFY BY HAND');
-    buffer.writeln('// ignore_for_file: constant_identifier_names, non_constant_identifier_names');
+    buffer.writeln(
+      '// ignore_for_file: constant_identifier_names, non_constant_identifier_names',
+    );
     buffer.writeln();
     buffer.writeln("part of '$partOf';");
     buffer.writeln();
@@ -56,7 +58,9 @@ class CodeEmitter {
     buffer.writeln('extension I18nTranslationExtension on String {');
     buffer.writeln('  /// Translates this key using the current locale.');
     buffer.writeln('  ///');
-    buffer.writeln('  /// [args] - Optional arguments for placeholder replacement.');
+    buffer.writeln(
+      '  /// [args] - Optional arguments for placeholder replacement.',
+    );
     buffer.writeln('  /// Example: "app.welcome".tr(args: {"name": "John"})');
     buffer.writeln('  String tr([Map<String, dynamic>? args]) {');
     buffer.writeln('    // This assumes mayr_i18n is available');
@@ -64,7 +68,9 @@ class CodeEmitter {
     buffer.writeln('    // or use this with the mayr_i18n package');
     buffer.writeln('    throw UnimplementedError(');
     buffer.writeln("      'Translation method not implemented. '");
-    buffer.writeln("      'Please implement this extension or use mayr_i18n package.',");
+    buffer.writeln(
+      "      'Please implement this extension or use mayr_i18n package.',",
+    );
     buffer.writeln('    );');
     buffer.writeln('  }');
     buffer.writeln('}');
@@ -75,7 +81,7 @@ class CodeEmitter {
   /// Emits a class for a nested key group.
   static void _emitClass(StringBuffer buffer, KeyNode node) {
     final className = _toClassName(node.key);
-    
+
     buffer.writeln('/// Translation keys under \'${node.fullPath}.*\'');
     buffer.writeln('class $className {');
     buffer.writeln('  const $className._();');
@@ -91,7 +97,9 @@ class CodeEmitter {
         buffer.writeln("  final String $key = '${childNode.fullPath}';");
       } else {
         final childClassName = _toClassName(key);
-        buffer.writeln("  /// Translation keys under '${childNode.fullPath}.*'");
+        buffer.writeln(
+          "  /// Translation keys under '${childNode.fullPath}.*'",
+        );
         buffer.writeln('  final $key = const $childClassName._();');
       }
     }
@@ -114,9 +122,10 @@ class CodeEmitter {
     // Convert to PascalCase
     final parts = key.split('_');
     final pascalCase = parts
-        .map((part) => part.isEmpty
-            ? ''
-            : part[0].toUpperCase() + part.substring(1))
+        .map(
+          (part) =>
+              part.isEmpty ? '' : part[0].toUpperCase() + part.substring(1),
+        )
         .join();
 
     return '_${pascalCase}Keys';
@@ -125,7 +134,7 @@ class CodeEmitter {
   /// Validates that a string is a valid Dart identifier.
   static bool isValidIdentifier(String name) {
     if (name.isEmpty) return false;
-    
+
     // Check if starts with letter or underscore
     final firstChar = name[0];
     if (!RegExp(r'[a-zA-Z_]').hasMatch(firstChar)) {

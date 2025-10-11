@@ -21,13 +21,8 @@ void main() {
 
     test('emits code for nested structure', () {
       final tree = KeyTreeBuilder.buildTree({
-        'app': {
-          'welcome': 'Welcome',
-          'logout': 'Goodbye',
-        },
-        'errors': {
-          'network': 'No connection',
-        },
+        'app': {'welcome': 'Welcome', 'logout': 'Goodbye'},
+        'errors': {'network': 'No connection'},
       });
 
       final code = CodeEmitter.emitCode(tree, 'translations.dart');
@@ -44,10 +39,7 @@ void main() {
     test('emits code for deeply nested structure', () {
       final tree = KeyTreeBuilder.buildTree({
         'profile': {
-          'details': {
-            'age': 'Age',
-            'email': 'Email',
-          },
+          'details': {'age': 'Age', 'email': 'Email'},
         },
       });
 
@@ -70,9 +62,7 @@ void main() {
 
     test('includes documentation comments', () {
       final tree = KeyTreeBuilder.buildTree({
-        'app': {
-          'welcome': 'Welcome',
-        },
+        'app': {'welcome': 'Welcome'},
       });
 
       final code = CodeEmitter.emitCode(tree, 'translations.dart');
@@ -83,11 +73,20 @@ void main() {
     });
 
     test('sanitizes invalid identifiers', () {
-      expect(CodeEmitter.sanitizeIdentifier('valid_name'), equals('valid_name'));
-      expect(CodeEmitter.sanitizeIdentifier('123invalid'), equals('_123invalid'));
+      expect(
+        CodeEmitter.sanitizeIdentifier('valid_name'),
+        equals('valid_name'),
+      );
+      expect(
+        CodeEmitter.sanitizeIdentifier('123invalid'),
+        equals('_123invalid'),
+      );
       expect(CodeEmitter.sanitizeIdentifier('with-dash'), equals('with_dash'));
       expect(CodeEmitter.sanitizeIdentifier('with.dot'), equals('with_dot'));
-      expect(CodeEmitter.sanitizeIdentifier('with space'), equals('with_space'));
+      expect(
+        CodeEmitter.sanitizeIdentifier('with space'),
+        equals('with_space'),
+      );
     });
 
     test('validates identifiers correctly', () {
@@ -95,7 +94,7 @@ void main() {
       expect(CodeEmitter.isValidIdentifier('valid_name'), isTrue);
       expect(CodeEmitter.isValidIdentifier('_private'), isTrue);
       expect(CodeEmitter.isValidIdentifier('name123'), isTrue);
-      
+
       expect(CodeEmitter.isValidIdentifier(''), isFalse);
       expect(CodeEmitter.isValidIdentifier('123invalid'), isFalse);
       expect(CodeEmitter.isValidIdentifier('with-dash'), isFalse);
@@ -106,9 +105,7 @@ void main() {
     test('handles mixed flat and nested keys', () {
       final tree = KeyTreeBuilder.buildTree({
         'simple': 'value',
-        'nested': {
-          'key': 'value',
-        },
+        'nested': {'key': 'value'},
       });
 
       final code = CodeEmitter.emitCode(tree, 'translations.dart');
@@ -120,10 +117,7 @@ void main() {
 
     test('emits valid Dart code structure', () {
       final tree = KeyTreeBuilder.buildTree({
-        'app': {
-          'title': 'App',
-          'welcome': 'Welcome',
-        },
+        'app': {'title': 'App', 'welcome': 'Welcome'},
       });
 
       final code = CodeEmitter.emitCode(tree, 'translations.dart');
@@ -132,7 +126,7 @@ void main() {
       expect(code, contains('class I18nKeys {'));
       expect(code, contains('const I18nKeys._();'));
       expect(code, contains('}'));
-      
+
       // Check for nested class
       expect(code, contains('class _AppKeys {'));
       expect(code, contains('const _AppKeys._();'));
@@ -143,7 +137,12 @@ void main() {
 
       final code = CodeEmitter.emitCode(tree, 'translations.dart');
 
-      expect(code, contains('// ignore_for_file: constant_identifier_names, non_constant_identifier_names'));
+      expect(
+        code,
+        contains(
+          '// ignore_for_file: constant_identifier_names, non_constant_identifier_names',
+        ),
+      );
     });
   });
 }

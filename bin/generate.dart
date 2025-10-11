@@ -1,5 +1,7 @@
 #!/usr/bin/env dart
+
 /// CLI tool for generating i18n translation keys.
+library;
 
 import 'dart:io';
 import 'package:mayr_i18n_generation/src/config.dart';
@@ -35,7 +37,9 @@ void main(List<String> args) async {
       exit(1);
     }
 
-    print('   Found ${translations.length} locale(s): ${translations.map((t) => t.locale).join(", ")}');
+    print(
+      '   Found ${translations.length} locale(s): ${translations.map((t) => t.locale).join(", ")}',
+    );
 
     // Build key trees
     print('\n🌲 Building key tree...');
@@ -64,7 +68,7 @@ void main(List<String> args) async {
     for (final dartFile in dartFiles) {
       final fileName = p.basename(dartFile);
       final generatedFile = dartFile.replaceAll('.dart', '.g.dart');
-      
+
       print('\n✨ Generating code for $fileName...');
       final code = CodeEmitter.emitCode(mergedTree, fileName);
 
@@ -73,7 +77,9 @@ void main(List<String> args) async {
     }
 
     print('\n✅ Code generation complete!');
-    print('\n💡 Tip: You can also use `dart run build_runner build` for automatic generation.');
+    print(
+      '\n💡 Tip: You can also use `dart run build_runner build` for automatic generation.',
+    );
   } catch (e, stackTrace) {
     print('\n❌ Error: $e');
     if (args.contains('--verbose') || args.contains('-v')) {
@@ -87,19 +93,21 @@ void main(List<String> args) async {
 /// Finds all Dart files with .g.dart part directives.
 List<String> _findDartFilesWithPartDirective([String? startPath]) {
   startPath ??= p.join(Directory.current.path, 'lib');
-  
+
   final libDir = Directory(startPath);
   if (!libDir.existsSync()) {
     return [];
   }
 
   final dartFiles = <String>[];
-  
+
   for (final entity in libDir.listSync(recursive: true)) {
-    if (entity is File && entity.path.endsWith('.dart') && !entity.path.endsWith('.g.dart')) {
+    if (entity is File &&
+        entity.path.endsWith('.dart') &&
+        !entity.path.endsWith('.g.dart')) {
       final content = entity.readAsStringSync();
       // Check for part directive with .g.dart
-      if (content.contains('.g.dart') && 
+      if (content.contains('.g.dart') &&
           (content.contains("part '") || content.contains('part "'))) {
         dartFiles.add(entity.path);
       }

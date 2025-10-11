@@ -16,10 +16,7 @@ class I18nConfig {
   final String defaultLocale;
 
   /// Creates a new configuration instance.
-  const I18nConfig({
-    required this.langDirectory,
-    required this.defaultLocale,
-  });
+  const I18nConfig({required this.langDirectory, required this.defaultLocale});
 
   /// Default configuration values.
   static const I18nConfig defaults = I18nConfig(
@@ -33,7 +30,7 @@ class I18nConfig {
   /// doesn't contain mayr_i18n configuration.
   static I18nConfig fromPubspec(String pubspecPath) {
     final file = File(pubspecPath);
-    
+
     if (!file.existsSync()) {
       return defaults;
     }
@@ -47,10 +44,12 @@ class I18nConfig {
       }
 
       final config = yaml['mayr_i18n'];
-      
+
       return I18nConfig(
-        langDirectory: config['lang_directory']?.toString() ?? defaults.langDirectory,
-        defaultLocale: config['default_locale']?.toString() ?? defaults.defaultLocale,
+        langDirectory:
+            config['lang_directory']?.toString() ?? defaults.langDirectory,
+        defaultLocale:
+            config['default_locale']?.toString() ?? defaults.defaultLocale,
       );
     } catch (e) {
       print('Warning: Failed to read mayr_i18n configuration: $e');
@@ -63,18 +62,18 @@ class I18nConfig {
   /// Searches upwards from [startPath] until a pubspec.yaml is found.
   static I18nConfig findAndRead([String? startPath]) {
     startPath ??= Directory.current.path;
-    
+
     var currentDir = Directory(startPath);
-    
+
     // Search upwards for pubspec.yaml
     while (true) {
       final pubspecPath = p.join(currentDir.path, 'pubspec.yaml');
       final file = File(pubspecPath);
-      
+
       if (file.existsSync()) {
         return fromPubspec(pubspecPath);
       }
-      
+
       final parentDir = currentDir.parent;
       if (parentDir.path == currentDir.path) {
         // Reached root directory
@@ -82,7 +81,7 @@ class I18nConfig {
       }
       currentDir = parentDir;
     }
-    
+
     return defaults;
   }
 

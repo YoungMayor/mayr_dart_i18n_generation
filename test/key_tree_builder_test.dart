@@ -4,10 +4,7 @@ import 'package:mayr_i18n_generation/src/key_tree_builder.dart';
 void main() {
   group('KeyTreeBuilder', () {
     test('builds tree from simple flat structure', () {
-      final data = {
-        'welcome': 'Welcome',
-        'logout': 'Goodbye',
-      };
+      final data = {'welcome': 'Welcome', 'logout': 'Goodbye'};
 
       final tree = KeyTreeBuilder.buildTree(data);
 
@@ -20,13 +17,8 @@ void main() {
 
     test('builds tree from nested structure', () {
       final data = {
-        'app': {
-          'welcome': 'Welcome',
-          'logout': 'Goodbye',
-        },
-        'errors': {
-          'network': 'No connection',
-        },
+        'app': {'welcome': 'Welcome', 'logout': 'Goodbye'},
+        'errors': {'network': 'No connection'},
       };
 
       final tree = KeyTreeBuilder.buildTree(data);
@@ -34,17 +26,21 @@ void main() {
       expect(tree.children, hasLength(2));
       expect(tree.children['app']?.isLeaf, isFalse);
       expect(tree.children['app']?.children, hasLength(2));
-      expect(tree.children['app']?.children['welcome']?.fullPath, equals('app.welcome'));
-      expect(tree.children['errors']?.children['network']?.fullPath, equals('errors.network'));
+      expect(
+        tree.children['app']?.children['welcome']?.fullPath,
+        equals('app.welcome'),
+      );
+      expect(
+        tree.children['errors']?.children['network']?.fullPath,
+        equals('errors.network'),
+      );
     });
 
     test('builds tree from deeply nested structure', () {
       final data = {
         'level1': {
           'level2': {
-            'level3': {
-              'deep': 'value',
-            },
+            'level3': {'deep': 'value'},
           },
         },
       };
@@ -53,13 +49,13 @@ void main() {
 
       final level1 = tree.children['level1'];
       expect(level1?.isLeaf, isFalse);
-      
+
       final level2 = level1?.children['level2'];
       expect(level2?.isLeaf, isFalse);
-      
+
       final level3 = level2?.children['level3'];
       expect(level3?.isLeaf, isFalse);
-      
+
       final deep = level3?.children['deep'];
       expect(deep?.isLeaf, isTrue);
       expect(deep?.fullPath, equals('level1.level2.level3.deep'));
@@ -77,7 +73,10 @@ void main() {
       final merged = KeyTreeBuilder.mergeTrees([tree1, tree2]);
 
       expect(merged.children['app']?.children, hasLength(2));
-      expect(merged.children['app']?.children.keys, containsAll(['welcome', 'logout']));
+      expect(
+        merged.children['app']?.children.keys,
+        containsAll(['welcome', 'logout']),
+      );
     });
 
     test('merges trees with overlapping keys', () {
@@ -92,7 +91,10 @@ void main() {
       final merged = KeyTreeBuilder.mergeTrees([tree1, tree2]);
 
       expect(merged.children['app']?.children, hasLength(3));
-      expect(merged.children['app']?.children.keys, containsAll(['welcome', 'title', 'logout']));
+      expect(
+        merged.children['app']?.children.keys,
+        containsAll(['welcome', 'title', 'logout']),
+      );
     });
 
     test('handles empty tree list when merging', () {
@@ -114,19 +116,17 @@ void main() {
 
     test('getAllPaths returns all leaf paths', () {
       final tree = KeyTreeBuilder.buildTree({
-        'app': {
-          'welcome': 'Welcome',
-          'logout': 'Goodbye',
-        },
-        'errors': {
-          'network': 'No connection',
-        },
+        'app': {'welcome': 'Welcome', 'logout': 'Goodbye'},
+        'errors': {'network': 'No connection'},
       });
 
       final paths = KeyTreeBuilder.getAllPaths(tree);
 
       expect(paths, hasLength(3));
-      expect(paths, containsAll(['app.welcome', 'app.logout', 'errors.network']));
+      expect(
+        paths,
+        containsAll(['app.welcome', 'app.logout', 'errors.network']),
+      );
     });
 
     test('getAllPaths returns sorted paths', () {
@@ -157,9 +157,7 @@ void main() {
     test('handles mixed nested and flat keys', () {
       final data = {
         'simple': 'value',
-        'nested': {
-          'key': 'value',
-        },
+        'nested': {'key': 'value'},
       };
 
       final tree = KeyTreeBuilder.buildTree(data);
@@ -167,7 +165,10 @@ void main() {
       expect(tree.children['simple']?.isLeaf, isTrue);
       expect(tree.children['simple']?.fullPath, equals('simple'));
       expect(tree.children['nested']?.isLeaf, isFalse);
-      expect(tree.children['nested']?.children['key']?.fullPath, equals('nested.key'));
+      expect(
+        tree.children['nested']?.children['key']?.fullPath,
+        equals('nested.key'),
+      );
     });
   });
 

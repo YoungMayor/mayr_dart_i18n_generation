@@ -66,9 +66,15 @@ void main() {
     });
 
     test('parses directory with multiple JSON files', () {
-      File(p.join(testDir.path, 'en.json')).writeAsStringSync('{"app": {"title": "App"}}');
-      File(p.join(testDir.path, 'fr.json')).writeAsStringSync('{"app": {"title": "Application"}}');
-      File(p.join(testDir.path, 'es.json')).writeAsStringSync('{"app": {"title": "Aplicación"}}');
+      File(
+        p.join(testDir.path, 'en.json'),
+      ).writeAsStringSync('{"app": {"title": "App"}}');
+      File(
+        p.join(testDir.path, 'fr.json'),
+      ).writeAsStringSync('{"app": {"title": "Application"}}');
+      File(
+        p.join(testDir.path, 'es.json'),
+      ).writeAsStringSync('{"app": {"title": "Aplicación"}}');
 
       final results = JsonParser.parseDirectory(testDir.path);
 
@@ -149,7 +155,7 @@ void main() {
 
       final result = JsonParser.parseFile(jsonPath);
       final nested = result.translations['level1']['level2']['level3'];
-      
+
       expect(nested, isA<Map<String, dynamic>>());
       expect(nested['deep'], equals('value'));
     });

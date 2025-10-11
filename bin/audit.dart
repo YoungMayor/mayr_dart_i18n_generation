@@ -1,5 +1,7 @@
 #!/usr/bin/env dart
+
 /// CLI tool for auditing translation key usage in code.
+library;
 
 import 'dart:io';
 import 'package:mayr_i18n_generation/src/config.dart';
@@ -48,7 +50,7 @@ void main(List<String> args) async {
 
     // Find unused keys
     final unusedKeys = definedKeys.difference(usedKeys).toList()..sort();
-    
+
     // Find undefined keys
     final undefinedKeys = usedKeys.difference(definedKeys).toList()..sort();
 
@@ -64,7 +66,9 @@ void main(List<String> args) async {
 
     if (undefinedKeys.isNotEmpty) {
       hasIssues = true;
-      print('⚠️  Keys used in code but NOT defined in JSON (${undefinedKeys.length}):');
+      print(
+        '⚠️  Keys used in code but NOT defined in JSON (${undefinedKeys.length}):',
+      );
       for (final key in undefinedKeys) {
         print('   - $key');
       }
@@ -72,12 +76,16 @@ void main(List<String> args) async {
     }
 
     if (unusedKeys.isNotEmpty) {
-      print('ℹ️  Keys defined in JSON but NOT used in code (${unusedKeys.length}):');
+      print(
+        'ℹ️  Keys defined in JSON but NOT used in code (${unusedKeys.length}):',
+      );
       for (final key in unusedKeys) {
         print('   - $key');
       }
       print('');
-      print('💡 Note: Unused keys are not necessarily a problem - they might be used in other parts of your app.');
+      print(
+        '💡 Note: Unused keys are not necessarily a problem - they might be used in other parts of your app.',
+      );
     }
 
     if (hasIssues) {
@@ -99,7 +107,7 @@ Set<String> _flattenKeys(Map<String, dynamic> map, [String prefix = '']) {
 
   for (final entry in map.entries) {
     final key = prefix.isEmpty ? entry.key : '$prefix.${entry.key}';
-    
+
     if (entry.value is Map<String, dynamic>) {
       keys.addAll(_flattenKeys(entry.value, key));
     } else {
@@ -120,15 +128,17 @@ Set<String> _scanForKeys(String directory, Set<String> definedKeys) {
   }
 
   for (final entity in dir.listSync(recursive: true)) {
-    if (entity is File && entity.path.endsWith('.dart') && !entity.path.endsWith('.g.dart')) {
+    if (entity is File &&
+        entity.path.endsWith('.dart') &&
+        !entity.path.endsWith('.g.dart')) {
       final content = entity.readAsStringSync();
-      
+
       // Look for string literals that match defined keys
       for (final key in definedKeys) {
         // Check various patterns:
         // - 'key' or "key"
         // - I18nKeys.key.path
-        if (content.contains("'$key'") || 
+        if (content.contains("'$key'") ||
             content.contains('"$key"') ||
             content.contains(key.replaceAll('.', '.'))) {
           usedKeys.add(key);

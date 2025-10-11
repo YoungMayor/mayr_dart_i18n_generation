@@ -1,5 +1,7 @@
 #!/usr/bin/env dart
+
 /// CLI tool for verifying translation keys across locales.
+library;
 
 import 'dart:io';
 import 'package:mayr_i18n_generation/src/config.dart';
@@ -31,7 +33,9 @@ void main(List<String> args) async {
       exit(1);
     }
 
-    print('   Found ${translations.length} locale(s): ${translations.map((t) => t.locale).join(", ")}\n');
+    print(
+      '   Found ${translations.length} locale(s): ${translations.map((t) => t.locale).join(", ")}\n',
+    );
 
     // Validate locales
     print('🔍 Checking for missing keys...');
@@ -39,7 +43,7 @@ void main(List<String> args) async {
 
     if (missingKeys.isEmpty) {
       print('✅ All locales have the same keys!\n');
-      
+
       // Show key count
       final firstLocale = translations.first;
       final keyCount = _countKeys(firstLocale.translations);
@@ -49,12 +53,12 @@ void main(List<String> args) async {
 
     // Report missing keys
     print('⚠️  Found missing keys:\n');
-    
+
     var hasErrors = false;
     for (final entry in missingKeys.entries) {
       final locale = entry.key;
       final missing = entry.value;
-      
+
       hasErrors = true;
       print('❌ Locale "$locale" is missing ${missing.length} key(s):');
       for (final key in missing) {
@@ -64,7 +68,9 @@ void main(List<String> args) async {
     }
 
     if (hasErrors) {
-      print('💡 Tip: Run `dart run mayr_i18n_generator:sync` to add missing keys automatically.');
+      print(
+        '💡 Tip: Run `dart run mayr_i18n_generator:sync` to add missing keys automatically.',
+      );
       exit(1);
     }
   } catch (e, stackTrace) {
@@ -80,7 +86,7 @@ void main(List<String> args) async {
 /// Counts the number of leaf keys in a translation map.
 int _countKeys(Map<String, dynamic> map) {
   var count = 0;
-  
+
   for (final value in map.values) {
     if (value is Map<String, dynamic>) {
       count += _countKeys(value);
@@ -88,6 +94,6 @@ int _countKeys(Map<String, dynamic> map) {
       count++;
     }
   }
-  
+
   return count;
 }

@@ -4,7 +4,6 @@ library;
 import 'dart:async';
 import 'package:build/build.dart';
 import 'package:source_gen/source_gen.dart';
-import 'package:analyzer/dart/element/element.dart';
 
 import 'config.dart';
 import 'json_parser.dart';
@@ -23,7 +22,7 @@ class I18nGenerator extends Generator {
     try {
       // Read configuration
       final config = I18nConfig.findAndRead();
-      
+
       // Get the language directory path relative to the build
       final langDir = config.getAbsoluteLangDirectory();
 
@@ -59,13 +58,14 @@ class I18nGenerator extends Generator {
   /// Checks if the library has a part directive for a .g.dart file.
   bool _hasPartDirective(LibraryReader library) {
     final element = library.element;
-    
+
     for (final part in element.parts) {
-      if (part.uri.endsWith('.g.dart')) {
+      final uriString = part.uri.toString();
+      if (uriString.endsWith('.g.dart')) {
         return true;
       }
     }
-    
+
     return false;
   }
 
@@ -74,21 +74,18 @@ class I18nGenerator extends Generator {
     final element = library.element;
     final source = element.source;
     final uri = source.uri;
-    
+
     // Get just the filename from the URI
     final segments = uri.pathSegments;
     if (segments.isNotEmpty) {
       return segments.last;
     }
-    
+
     return 'translations.dart';
   }
 }
 
 /// Builder factory for the i18n generator.
 Builder i18nBuilder(BuilderOptions options) {
-  return LibraryBuilder(
-    I18nGenerator(),
-    generatedExtension: '.g.dart',
-  );
+  return LibraryBuilder(I18nGenerator(), generatedExtension: '.g.dart');
 }

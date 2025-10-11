@@ -1,5 +1,7 @@
 #!/usr/bin/env dart
+
 /// CLI tool for creating new language files.
+library;
 
 import 'dart:io';
 import 'dart:convert';
@@ -15,14 +17,14 @@ void main(List<String> args) async {
   }
 
   final newLocale = args[0];
-  
+
   print('🌍 mayr_i18n_generator - Creating new language file...\n');
   print('📝 Locale: $newLocale\n');
 
   try {
     // Read configuration
     final config = I18nConfig.findAndRead();
-    
+
     // Get language directory
     final langDir = config.getAbsoluteLangDirectory();
 
@@ -45,7 +47,7 @@ void main(List<String> args) async {
 
     // Try to find existing translation files to use as template
     Map<String, dynamic> template = {};
-    
+
     try {
       final translations = JsonParser.parseDirectory(langDir);
       if (translations.isNotEmpty) {
@@ -57,13 +59,8 @@ void main(List<String> args) async {
       // No existing files, create an empty template
       print('📋 Creating empty template...');
       template = {
-        'app': {
-          'welcome': '',
-          'logout': '',
-        },
-        'errors': {
-          'network': '',
-        },
+        'app': {'welcome': '', 'logout': ''},
+        'errors': {'network': ''},
       };
     }
 
@@ -76,7 +73,9 @@ void main(List<String> args) async {
     print('\n💡 Next steps:');
     print('   1. Open $newFilePath');
     print('   2. Fill in the translation values');
-    print('   3. Run `dart run mayr_i18n_generator:generate` to update generated code');
+    print(
+      '   3. Run `dart run mayr_i18n_generator:generate` to update generated code',
+    );
   } catch (e, stackTrace) {
     print('\n❌ Error: $e');
     if (args.contains('--verbose') || args.contains('-v')) {
