@@ -54,14 +54,13 @@ class CodeEmitter {
     }
 
     buffer.writeln('}');
-    buffer.writeln();
 
     // Generate nested classes
     for (final entry in tree.children.entries) {
       final node = entry.value;
       if (!node.isLeaf) {
-        _emitClass(buffer, node, defaultValues);
         buffer.writeln();
+        _emitClass(buffer, node, defaultValues);
       }
     }
 
